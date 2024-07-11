@@ -1,4 +1,4 @@
-import { Home } from "./Pages/Pages";
+import { Electrolyser, Home } from "./Pages/Pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./Components/Components";
 
@@ -8,6 +8,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/electrolyser" element={<Electrolyser />}></Route>
       </Routes>
     </BrowserRouter>
   );

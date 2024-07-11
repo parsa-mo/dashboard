@@ -1,3 +1,4 @@
 import Home from "./Home";
+import Electrolyser from "./Electrolyser";
 
-export { Home };
+export { Home, Electrolyser };

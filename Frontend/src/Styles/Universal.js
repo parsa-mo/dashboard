@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 
 const Main = styled.main`
-  width: 1100px !important;
-  height: 1900px !important;
+  width: 100% !important;
+  height: 100% !important;
   padding: 0 !important;
   margin: 0 auto 0 auto !important;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -12,6 +13,21 @@ const Container = styled.div`
   padding: 3rem;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 `;
 
-export { Main, Container };
+const VisualDiv = styled.div`
+  ///background-color: darkgray;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  display: block;
+  text-align: center;
+`;
+
+export { Main, Container, VisualDiv, Title };

@@ -7,10 +7,10 @@ const Home = () => {
   return (
     <Main>
       <Container>
-        <NavLink to={"/electrolyzer"}>
+        <NavLink to={"/electrolyser"}>
           <img
             src={Electrolyzer}
-            alt="Electrolyzer"
+            alt="Electrolyser"
             style={{ width: "400px" }}
           />
         </NavLink>
