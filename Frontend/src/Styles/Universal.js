@@ -14,6 +14,13 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   box-sizing: border-box;
+  flex-direction: column;
+`;
+
+const Row = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 4rem;
 `;
 
 const VisualDiv = styled.div`
@@ -30,4 +37,4 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-export { Main, Container, VisualDiv, Title };
+export { Main, Container, VisualDiv, Title, Row };
