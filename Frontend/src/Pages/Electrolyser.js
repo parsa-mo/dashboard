@@ -1,5 +1,9 @@
 import React from "react";
-import { TemperatureGauge, LiquidGauge } from "../DataVisuals/DataVisuals";
+import {
+  TemperatureGauge,
+  LiquidGauge,
+  VoltageGauge,
+} from "../DataVisuals/DataVisuals";
 import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
 
 const Electrolyser = () => {
@@ -34,6 +38,12 @@ const Electrolyser = () => {
         <VisualDiv>
           <Title> Water Level</Title>
           <LiquidGauge water={60} />
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
+          <Title>Voltage</Title>
+          <VoltageGauge voltage={24} />
         </VisualDiv>
       </Row>
     </Container>

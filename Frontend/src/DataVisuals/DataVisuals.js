@@ -1,4 +1,5 @@
 import TemperatureGauge from "./TemperatureGauge";
 import LiquidGauge from "./LiquidGuage";
+import VoltageGauge from "./VoltageGauge";
 
-export { TemperatureGauge, LiquidGauge };
+export { VoltageGauge, TemperatureGauge, LiquidGauge };
