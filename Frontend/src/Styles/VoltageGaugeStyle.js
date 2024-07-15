@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 const Img = styled.img`
-  width: 400px;
+  width: 300px;
 `;
 
 const Container = styled.div`
@@ -14,8 +14,8 @@ const VoltText = styled.span`
   top: 50%;
   left: 25%;
   transform: translate(-50%, -50%);
-  color: #00aeff; // or any color that makes the text visible on the image
-  font-size: 7rem;
+  color: #ffffff; // or any color that makes the text visible on the image
+  font-size: 5.5rem;
   font-family: "DSDIGI";
 `;
 const Span = styled.span`
@@ -28,8 +28,8 @@ const AmpText = styled.span`
   top: 50%;
   left: 75%;
   transform: translate(-50%, -50%);
-  color: #ff0000; // or any color that makes the text visible on the image
-  font-size: 7rem;
+  color: #ffffff; // or any color that makes the text visible on the image
+  font-size: 5.5rem;
   font-family: "DSDIGI";
 `;
 

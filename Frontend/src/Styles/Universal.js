@@ -30,11 +30,15 @@ const VisualDiv = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: rgba(104, 103, 103, 0.48);
+  border-radius: 60px;
+  margin: 0 50px;
 `;
 
 const Title = styled.h1`
   display: block;
   text-align: center;
+  color: white;
 `;
 
 export { Main, Container, VisualDiv, Title, Row };

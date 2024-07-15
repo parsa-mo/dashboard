@@ -127,7 +127,7 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
         .attr("y1", yLabel)
         .attr("x2", xArc)
         .attr("y2", yArc)
-        .style("stroke", "#000000");
+        .style("stroke", "#ffffff");
 
       // Label text
       svg
@@ -137,8 +137,8 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
         .text(`${Math.round(temp)}°`)
-        .style("font-size", "1rem")
-        .style("fill", "#333");
+        .style("font-size", "1.1rem")
+        .style("fill", "#ffffff");
     }
 
     // Temperature text
@@ -149,7 +149,7 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
       .attr("transform", `translate(${width / 2},${height / 2 + 30})`)
       .text(`${temperature}°C`)
       .style("font-size", "3rem")
-      .style("fill", "#333");
+      .style("fill", "#ffffff");
   }, [temperature, minTemp, maxTemp, optimalTemp, numLabels]);
 
   return <svg ref={ref}></svg>;

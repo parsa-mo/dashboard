@@ -1,7 +1,6 @@
 import { color } from "d3-color";
 import { interpolateRgb } from "d3-interpolate";
 import LiquidFillGauge from "react-liquid-gauge";
-
 import React from "react";
 
 const LiquidGuage = ({ water }) => {
@@ -36,7 +35,7 @@ const LiquidGuage = ({ water }) => {
   ];
 
   return (
-    <div>
+    <div style={{ paddingBottom: "30px" }}>
       <LiquidFillGauge
         style={{ margin: "0 auto" }}
         width={radius * 2}
@@ -73,7 +72,7 @@ const LiquidGuage = ({ water }) => {
         gradient
         gradientStops={gradientStops}
         circleStyle={{
-          fill: fillColor,
+          fill: "#ffffff", // Set fill to "none" to remove the outer circle fill
         }}
         waveStyle={{
           fill: fillColor,
@@ -87,12 +86,6 @@ const LiquidGuage = ({ water }) => {
           fontFamily: "Arial",
         }}
       />
-      <div
-        style={{
-          margin: "20px auto",
-          width: 120,
-        }}
-      ></div>
     </div>
   );
 };
