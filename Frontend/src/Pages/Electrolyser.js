@@ -5,6 +5,7 @@ import {
   VoltageGauge,
   BarChart,
   AreaChart,
+  LineChart,
 } from "../DataVisuals/DataVisuals";
 import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
 
@@ -35,12 +36,20 @@ const Electrolyser = () => {
           />
         </VisualDiv>
       </Row>
+
       <Row>
         <VisualDiv>
-          <AreaChart></AreaChart>
+          <AreaChart name="Humidity"></AreaChart>
         </VisualDiv>
         <VisualDiv>
+          <Title>Rate of Gas production</Title>
           <BarChart name="GasFlow"></BarChart>
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
+          <Title>Gas Production</Title>
+          <LineChart name="Gas Production"></LineChart>
         </VisualDiv>
       </Row>
       <Row>
