@@ -32,7 +32,7 @@ const VisualDiv = styled.div`
   align-items: center;
   background-color: rgba(104, 103, 103, 0.48);
   border-radius: 60px;
-  margin: 0 50px;
+  margin: 0 30px;
 `;
 
 const Title = styled.h1`

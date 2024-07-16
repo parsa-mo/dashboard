@@ -82,7 +82,7 @@ const BarChart = ({
       .attr("class", "xAxis")
       .call(xAxis)
       .selectAll("text")
-      .style("font-size", "1.5em")
+      .style("font-size", "2.5em")
       .style("font-weight", "bold")
       .style("fill", "white"); // Set text color to white
 
@@ -105,7 +105,7 @@ const BarChart = ({
       .attr("class", "yAxis")
       .selectAll("text")
       .attr("x", -15)
-      .style("font-size", "1.7em")
+      .style("font-size", "2em")
       .style("padding-right", "10px")
       .style("fill", "white"); // Set text color to white
 
@@ -129,6 +129,7 @@ const BarChart = ({
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .style("font-size", "1.5em")
+      .style("font-weight", "bold")
       .style("fill", "white") // Set text color to white
       .text("Gas Flow (L/min)");
   }, [data]);

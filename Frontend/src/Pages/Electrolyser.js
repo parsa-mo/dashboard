@@ -4,6 +4,7 @@ import {
   LiquidGauge,
   VoltageGauge,
   BarChart,
+  AreaChart,
 } from "../DataVisuals/DataVisuals";
 import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
 
@@ -28,7 +29,7 @@ const Electrolyser = () => {
         <VisualDiv>
           <Title> Water Temperature</Title>
           <TemperatureGauge
-            name="Water Temperature"
+            name="WaterTemperature"
             temperature={100}
             optimalTemp={50}
           />
@@ -36,13 +37,16 @@ const Electrolyser = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <VoltageGauge voltage={24} />
+          <AreaChart></AreaChart>
         </VisualDiv>
         <VisualDiv>
-          <BarChart></BarChart>
+          <BarChart name="GasFlow"></BarChart>
         </VisualDiv>
       </Row>
       <Row>
+        <VisualDiv>
+          <VoltageGauge voltage={24} />
+        </VisualDiv>
         <VisualDiv>
           <Title> Water Level</Title>
           <LiquidGauge water={60} />
