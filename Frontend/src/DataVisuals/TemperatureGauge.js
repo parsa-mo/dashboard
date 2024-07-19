@@ -7,7 +7,7 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
   const minTemp = -optimalTemp;
   const maxTemp = optimalTemp * 3;
   useEffect(() => {
-    const svg = d3.select(ref.current).attr("width", 500).attr("height", 350);
+    const svg = d3.select(ref.current).attr("width", 500).attr("height", 400);
 
     svg.selectAll("*").remove(); // Clear previous content
 

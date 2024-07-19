@@ -54,6 +54,7 @@ const Electrolyser = () => {
       </Row>
       <Row>
         <VisualDiv>
+          <Title>Power</Title>
           <VoltageGauge voltage={24} />
         </VisualDiv>
         <VisualDiv>

@@ -9,11 +9,13 @@ import {
 import Voltmeter from "../Images/Voltmeter.png";
 import Ampmeter from "../Images/Ampmeter.png";
 
-const VoltageGauge = ({ voltage = 0 }) => {
+const VoltageGauge = ({ voltage = 0, amps = 0 }) => {
   const [Volt, setVolt] = useState(voltage);
+  const [Amp, setAmp] = useState(amps);
   useEffect(() => {
+    setAmp(amps);
     setVolt(voltage);
-  }, [voltage]);
+  }, [voltage, amps]);
 
   return (
     <Div>
@@ -24,7 +26,7 @@ const VoltageGauge = ({ voltage = 0 }) => {
           {Volt}
           {/*<Span>.0</Span>*/}
         </VoltText>
-        <AmpText>40</AmpText>
+        <AmpText>{Amp}</AmpText>
       </Container>
     </Div>
   );

@@ -10,23 +10,29 @@ const LineChart = () => {
   const marginBottom = 100;
   const svgRef = useRef();
 
-  const [data, setData] = useState([{ time: 0, oxygen: 0, hydrogen: 0 }]);
+  const [data, setData] = useState([
+    { time: 0, oxygen: 100, hydrogen: 100, water: 0 },
+  ]);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds + 1);
-      setData((prevData) => [
-        ...prevData,
-        {
-          time: seconds + 1,
-          oxygen: Math.floor(Math.random() * 25),
-          hydrogen: Math.floor(Math.random() * 25),
-        },
-      ]);
+      setData((prevData) => {
+        const lastEntry = prevData[prevData.length - 1];
+        return [
+          ...prevData,
+          {
+            time: lastEntry.time + 1,
+            oxygen: lastEntry.oxygen - Math.floor(Math.random() * 5),
+            hydrogen: lastEntry.hydrogen - Math.floor(Math.random() * 5),
+            water: lastEntry.water + Math.floor(Math.random() * 5),
+          },
+        ];
+      });
     }, 3000);
     return () => clearInterval(interval);
-  }, [seconds]);
+  }, [data, seconds]);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -41,7 +47,10 @@ const LineChart = () => {
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => Math.max(d.oxygen, d.hydrogen))])
+      .domain([
+        d3.min(data, (d) => Math.min(d.water, d.oxygen, d.hydrogen) - 20),
+        d3.max(data, (d) => Math.max(d.oxygen, d.hydrogen, d.water) + 20),
+      ])
       .range([height - marginBottom, marginTop]);
 
     const oxygenLine = d3
@@ -54,11 +63,16 @@ const LineChart = () => {
       .x((d) => x(d.time))
       .y((d) => y(d.hydrogen));
 
+    const waterLine = d3
+      .line()
+      .x((d) => x(d.time))
+      .y((d) => y(d.water));
+
     svg
       .append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", "steelblue")
+      .attr("stroke", "green")
       .attr("stroke-width", 2)
       .attr("d", oxygenLine);
 
@@ -69,6 +83,14 @@ const LineChart = () => {
       .attr("stroke", "red")
       .attr("stroke-width", 2)
       .attr("d", hydrogenLine);
+
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 2)
+      .attr("d", waterLine);
 
     svg
       .append("g")
@@ -131,7 +153,7 @@ const LineChart = () => {
       .attr("y", -60)
       .attr("fill", "currentColor")
       .attr("text-anchor", "middle")
-      .text("Volume Produced (L)")
+      .text("Volume (L)")
       .style("font-weight", "bold")
       .style("font-size", "2em")
       .style("fill", "white");
@@ -160,7 +182,7 @@ const LineChart = () => {
       .attr("y", 0)
       .attr("width", 20)
       .attr("height", 20)
-      .attr("fill", "steelblue");
+      .attr("fill", "green");
 
     legend
       .append("text")
@@ -186,72 +208,21 @@ const LineChart = () => {
       .text("Hydrogen")
       .style("font-size", "1.2em");
 
-    const tooltip = svg
-      .append("g")
-      .attr("class", "tooltip")
-      .style("display", "none");
-
-    tooltip
+    legend
       .append("rect")
-      .attr("rx", 5)
-      .attr("ry", 5)
-      .attr("width", 150)
-      .attr("height", 70)
-      .attr("fill", "rgba(0,0,0,0.7)")
-      .style("pointer-events", "none");
+      .attr("x", 130)
+      .attr("y", 60)
+      .attr("width", 20)
+      .attr("height", 20)
+      .attr("fill", "steelblue");
 
-    const tooltipText = tooltip
+    legend
       .append("text")
-      .attr("x", 10)
-      .attr("y", 20)
+      .attr("x", 160)
+      .attr("y", 75)
       .attr("fill", "white")
-      .style("font-size", "12px")
-      .style("font-weight", "bold");
-
-    const focus = svg.append("g").style("display", "none");
-
-    focus.append("circle").attr("r", 5).attr("fill", "white");
-
-    svg
-      .append("rect")
-      .attr("class", "overlay")
-      .attr("width", width)
-      .attr("height", height)
-      .style("fill", "none")
-      .style("pointer-events", "all")
-      .on("mouseover", () => {
-        focus.style("display", null);
-        tooltip.style("display", null);
-      })
-      .on("mouseout", () => {
-        focus.style("display", "none");
-        tooltip.style("display", "none");
-      })
-      .on("mousemove", function (event) {
-        if (data.length < 2) return;
-
-        const x0 = x.invert(d3.pointer(event)[0]);
-        const bisect = d3.bisector((d) => d.time).left;
-        const i = bisect(data, x0, 1);
-        const d = data[i];
-
-        if (!d) return;
-
-        focus.attr("transform", `translate(${x(d.time)},${y(d.oxygen)})`);
-        tooltip.attr(
-          "transform",
-          `translate(${x(d.time)},${y(d.oxygen) - 80})`,
-        );
-
-        const text = `Time: ${d.time}, Oxygen: ${d.oxygen}, Hydrogen: ${d.hydrogen}`;
-        tooltipText.text(text);
-
-        const bbox = tooltipText.node().getBBox();
-        tooltip
-          .select("rect")
-          .attr("width", bbox.width + 20)
-          .attr("height", bbox.height + 20);
-      });
+      .text("Water")
+      .style("font-size", "1.2em");
   }, [data]);
 
   return (

@@ -33,6 +33,7 @@ const VisualDiv = styled.div`
   background-color: rgba(104, 103, 103, 0.48);
   border-radius: 60px;
   margin: 0 30px;
+  padding-bottom: 20px;
 `;
 
 const Title = styled.h1`
