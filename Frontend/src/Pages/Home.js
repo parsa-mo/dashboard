@@ -1,5 +1,5 @@
 import React from "react";
-import { Main, Container } from "../Styles/Universal";
+import { Main, Container, Wire1, Wire2, Wire3 } from "../Styles/Universal";
 import { NavLink } from "react-router-dom";
 import { Electrolyzer, cell, Grid } from "../Images/Images";
 
@@ -12,6 +12,7 @@ const Home = () => {
         <NavLink to={"/grid"}>
           <img src={Grid} alt="Grid" style={{ width: "400px" }} />
         </NavLink>
+        <Wire1 />
         <NavLink to={"/electrolyser"}>
           <img
             src={Electrolyzer}
@@ -19,6 +20,8 @@ const Home = () => {
             style={{ width: "400px" }}
           />
         </NavLink>
+        <Wire2 />
+        <Wire3 />
       </Container>
       <Container
         style={{ flexDirection: "row", justifyContent: "space-around" }}

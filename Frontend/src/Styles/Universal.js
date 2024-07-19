@@ -42,4 +42,34 @@ const Title = styled.h1`
   color: white;
 `;
 
-export { Main, Container, VisualDiv, Title, Row };
+//Wires
+const Wire1 = styled.hr`
+  width: 680px;
+  position: absolute;
+  border: solid 3px black;
+  top: 400px;
+  z-index: -1;
+`;
+
+const Wire2 = styled.hr`
+  width: 22vw;
+  position: absolute;
+  border: solid 3px black;
+  background: black;
+  top: 715px;
+  left: 460px;
+
+  transform: rotate(45deg);
+`;
+
+const Wire3 = styled.hr`
+  width: 20.5vw;
+  position: absolute;
+  border: solid 3px black;
+  background: black;
+  top: 700px;
+  left: 1020px;
+  transform: rotate(-45deg);
+`;
+
+export { Main, Container, VisualDiv, Title, Row, Wire1, Wire3, Wire2 };
