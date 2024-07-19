@@ -42,13 +42,13 @@ const Electrolyser = () => {
           <AreaChart name="Humidity"></AreaChart>
         </VisualDiv>
         <VisualDiv>
-          <Title>Rate of Gas production</Title>
+          <Title>Rate of Production</Title>
           <BarChart name="GasFlow"></BarChart>
         </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
-          <Title>Gas Production</Title>
+          <Title>Total Production/Usage</Title>
           <LineChart name="Gas Production"></LineChart>
         </VisualDiv>
       </Row>

@@ -1,9 +1,8 @@
 import React from "react";
 import {
   TemperatureGauge,
-  LiquidGauge,
   VoltageGauge,
-  BarChart,
+  BarChart2,
   AreaChart,
   LineChart,
 } from "../DataVisuals/DataVisuals";
@@ -19,10 +18,8 @@ const FuelCell = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <Title>Hydrogen Level</Title>
-        </VisualDiv>
-        <VisualDiv>
-          <Title>Oxygen Level</Title>
+          <Title>Production/Usage Rate</Title>
+          <BarChart2></BarChart2>
         </VisualDiv>
       </Row>
       <Row>
@@ -37,7 +34,7 @@ const FuelCell = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <Title>Production/Usage Rate</Title>
+          <Title>Production/Usage</Title>
           <LineChart></LineChart>
         </VisualDiv>
       </Row>
