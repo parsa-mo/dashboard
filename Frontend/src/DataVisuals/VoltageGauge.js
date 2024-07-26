@@ -6,22 +6,23 @@ import {
   VoltText,
   Container,
 } from "../Styles/VoltageGaugeStyle";
-import Voltmeter from "../Images/Voltmeter.png";
-import Ampmeter from "../Images/Ampmeter.png";
 
-const VoltageGauge = ({ voltage = 0, amps = 0 }) => {
-  const [Volt, setVolt] = useState(voltage);
-  const [Amp, setAmp] = useState(amps);
+const VoltageGauge = ({
+  data = { voltage: 0, amps: 0 },
+  logo = { voltmeter: "", ampmeter: "" },
+}) => {
+  const [Volt, setVolt] = useState(data.voltage);
+  const [Amp, setAmp] = useState(data.amps);
   useEffect(() => {
-    setAmp(amps);
-    setVolt(voltage);
-  }, [voltage, amps]);
+    setAmp(data.amps);
+    setVolt(data.voltage);
+  }, [data]);
 
   return (
     <Div>
       <Container>
-        <Img src={Voltmeter} alt="voltmeter" />
-        <Img src={Ampmeter} alt="ampmeter" />
+        <Img src={logo.voltmeter} alt="voltmeter" />
+        <Img src={logo.ampmeter} alt="ampmeter" />
         <VoltText>
           {Volt}
           {/*<Span>.0</Span>*/}

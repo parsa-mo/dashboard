@@ -1,12 +1,14 @@
 import React from "react";
-import {
-  TemperatureGauge,
-  VoltageGauge,
-  BarChart,
-  AreaChart,
-  LineChart,
-} from "../DataVisuals/DataVisuals";
+import { VoltageGauge } from "../DataVisuals/DataVisuals";
 import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
+import {
+  Voltmeter,
+  VoltmeterSolar,
+  VoltmeterAC,
+  Ampmeter,
+  AmpmeterAC,
+  AmpmeterSolar,
+} from "../Images/Images";
 
 const Grid = () => {
   return (
@@ -18,14 +20,26 @@ const Grid = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <Title> Solar Battery</Title>
-          <VoltageGauge></VoltageGauge>
+          <Title> AC Power</Title>
+          <VoltageGauge
+            logo={{ voltmeter: VoltmeterAC, ampmeter: AmpmeterAC }}
+          ></VoltageGauge>
         </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
-          <Title> Power Source</Title>
-          <VoltageGauge></VoltageGauge>
+          <Title> Solar</Title>
+          <VoltageGauge
+            logo={{ voltmeter: VoltmeterSolar, ampmeter: AmpmeterSolar }}
+          ></VoltageGauge>
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
+          <Title> Battery</Title>
+          <VoltageGauge
+            logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
+          ></VoltageGauge>
         </VisualDiv>
       </Row>
     </Container>
