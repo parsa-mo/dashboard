@@ -1,18 +1,25 @@
 import { color } from "d3-color";
-import { interpolateRgb } from "d3-interpolate";
 import LiquidFillGauge from "react-liquid-gauge";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { scaleLinear } from "d3-scale";
 
-const LiquidGuage = ({ water }) => {
-  const state = {
-    value: water,
-  };
-  const startColor = "#6495ed"; // cornflowerblue
-  const endColor = "rgb(7, 94, 155)"; // crimson
+const LiquidGuage = ({ WaterLevel, WaterPH }) => {
+  const [state, setState] = useState(WaterLevel);
+  const [waterPH, setWaterPH] = useState(WaterPH);
+
+  useEffect(() => {
+    setState(WaterLevel);
+    setWaterPH(WaterPH);
+  }, [WaterLevel, WaterPH]);
 
   const radius = 200;
-  const interpolate = interpolateRgb(startColor, endColor);
-  const fillColor = interpolate(state.value / 100);
+
+  // Define a color scale for pH value
+  const pHColorScale = scaleLinear()
+    .domain([0, 7, 14])
+    .range(["red", "green", "blue"]);
+
+  const fillColor = pHColorScale(waterPH);
   const gradientStops = [
     {
       key: "0%",
@@ -40,7 +47,7 @@ const LiquidGuage = ({ water }) => {
         style={{ margin: "0 auto" }}
         width={radius * 2}
         height={radius * 2}
-        value={state.value}
+        value={state}
         percent="%"
         textSize={1}
         textOffsetX={0}
@@ -55,6 +62,12 @@ const LiquidGuage = ({ water }) => {
           const percentStyle = {
             fontSize: textPixels * 0.6,
           };
+          const pHStyle = {
+            fontSize: textPixels * 0.5,
+          };
+          const pHSymbol = {
+            fontSize: textPixels * 0.2,
+          };
 
           return (
             <tspan>
@@ -62,6 +75,10 @@ const LiquidGuage = ({ water }) => {
                 {value}
               </tspan>
               <tspan style={percentStyle}>{props.percent}</tspan>
+              <tspan x="0" dy="2em" style={pHStyle}>
+                {waterPH}
+                <tspan style={pHSymbol}> pH</tspan>
+              </tspan>
             </tspan>
           );
         }}

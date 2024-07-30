@@ -8,6 +8,7 @@ import {
   LineChart,
 } from "../DataVisuals/DataVisuals";
 import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
+import { Voltmeter, Ampmeter } from "../Images/Images";
 
 const Electrolyser = () => {
   return (
@@ -55,11 +56,14 @@ const Electrolyser = () => {
       <Row>
         <VisualDiv>
           <Title>Power</Title>
-          <VoltageGauge voltage={24} />
+          <VoltageGauge
+            voltage={24}
+            logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
+          />
         </VisualDiv>
         <VisualDiv>
           <Title> Water Level</Title>
-          <LiquidGauge water={60} />
+          <LiquidGauge WaterLevel={60} WaterPH={9} />
         </VisualDiv>
       </Row>
     </Container>
