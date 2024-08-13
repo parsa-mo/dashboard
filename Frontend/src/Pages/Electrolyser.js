@@ -7,7 +7,13 @@ import {
   AreaChart,
   LineChart,
 } from "../DataVisuals/DataVisuals";
-import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
+import {
+  Container,
+  VisualDiv,
+  Title,
+  Row,
+  SubTitle,
+} from "../Styles/Universal";
 import { Voltmeter, Ampmeter } from "../Images/Images";
 
 const Electrolyser = () => {
@@ -15,13 +21,13 @@ const Electrolyser = () => {
     <Container>
       <Row>
         <VisualDiv>
-          <Title style={{ fontSize: "4rem" }}>Electrolyser Dashboard</Title>
+          <Title>Electrolyser Dashboard</Title>
         </VisualDiv>
       </Row>
 
       <Row>
         <VisualDiv>
-          <Title>Internal Temperature</Title>
+          <SubTitle>Internal Temperature</SubTitle>
           <TemperatureGauge
             name="InternalTemperature"
             temperature={750}
@@ -29,7 +35,7 @@ const Electrolyser = () => {
           />
         </VisualDiv>
         <VisualDiv>
-          <Title> Water Temperature</Title>
+          <SubTitle> Water Temperature</SubTitle>
           <TemperatureGauge
             name="WaterTemperature"
             temperature={100}
@@ -43,26 +49,26 @@ const Electrolyser = () => {
           <AreaChart name="Humidity"></AreaChart>
         </VisualDiv>
         <VisualDiv>
-          <Title>Rate of Production</Title>
+          <SubTitle>Rate of Production</SubTitle>
           <BarChart name="GasFlow"></BarChart>
         </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
-          <Title>Total Production/Usage</Title>
+          <SubTitle>Total Production/Usage</SubTitle>
           <LineChart name="Gas Production"></LineChart>
         </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
-          <Title>Power</Title>
+          <SubTitle>Power</SubTitle>
           <VoltageGauge
             voltage={24}
             logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
           />
         </VisualDiv>
         <VisualDiv>
-          <Title> Water Level</Title>
+          <SubTitle> Water Level</SubTitle>
           <LiquidGauge WaterLevel={60} WaterPH={9} />
         </VisualDiv>
       </Row>

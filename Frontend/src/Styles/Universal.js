@@ -40,6 +40,15 @@ const Title = styled.h1`
   display: block;
   text-align: center;
   color: white;
+  font-size: 4rem;
+`;
+
+const SubTitle = styled.h1`
+  display: block;
+  position: relative;
+  text-align: center;
+  color: white;
+  top: 10;
 `;
 
 //Wires
@@ -72,4 +81,14 @@ const Wire3 = styled.hr`
   transform: rotate(-45deg);
 `;
 
-export { Main, Container, VisualDiv, Title, Row, Wire1, Wire3, Wire2 };
+export {
+  Main,
+  Container,
+  VisualDiv,
+  Title,
+  Row,
+  Wire1,
+  Wire3,
+  Wire2,
+  SubTitle,
+};

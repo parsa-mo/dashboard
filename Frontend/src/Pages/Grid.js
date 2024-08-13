@@ -1,6 +1,12 @@
 import React from "react";
 import { VoltageGauge } from "../DataVisuals/DataVisuals";
-import { Container, VisualDiv, Title, Row } from "../Styles/Universal";
+import {
+  Container,
+  VisualDiv,
+  Title,
+  Row,
+  SubTitle,
+} from "../Styles/Universal";
 import {
   Voltmeter,
   VoltmeterSolar,
@@ -15,12 +21,12 @@ const Grid = () => {
     <Container>
       <Row>
         <VisualDiv>
-          <Title style={{ fontSize: "4rem" }}>Grid Dashboard</Title>
+          <Title>Grid Dashboard</Title>
         </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
-          <Title> AC Power</Title>
+          <SubTitle> AC Power</SubTitle>
           <VoltageGauge
             logo={{ voltmeter: VoltmeterAC, ampmeter: AmpmeterAC }}
           ></VoltageGauge>
@@ -28,7 +34,7 @@ const Grid = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <Title> Solar</Title>
+          <SubTitle> Solar</SubTitle>
           <VoltageGauge
             logo={{ voltmeter: VoltmeterSolar, ampmeter: AmpmeterSolar }}
           ></VoltageGauge>
@@ -36,7 +42,7 @@ const Grid = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <Title> Battery</Title>
+          <SubTitle> Battery</SubTitle>
           <VoltageGauge
             logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
           ></VoltageGauge>

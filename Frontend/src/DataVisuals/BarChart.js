@@ -46,7 +46,7 @@ const BarChart = ({
       .attr("y", (d) => y_scale(d.FlowRate))
       .attr("width", x_scale.bandwidth())
       .attr("height", (d) => height - y_scale(d.FlowRate))
-      .attr("fill", "steelblue")
+      .attr("fill", (d) => (d.Name === "Oxygen" ? "steelblue" : "red"))
       .attr("rx", 10) // Horizontal radius for rounded corners
       .attr("ry", 10); // Vertical radius for rounded corners
 

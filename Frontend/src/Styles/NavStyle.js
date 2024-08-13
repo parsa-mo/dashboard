@@ -3,6 +3,10 @@ import styled from "@emotion/styled";
 const NavContainer = styled.div`
   top: 0;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
 `;
 
 const NavLogo = styled.img`
@@ -19,4 +23,8 @@ const NavLine = styled.hr`
   border-top: 2px solid black;
 `;
 
-export { NavContainer, NavLogo, NavLine };
+const NavButtonDiv = styled.div`
+  display: block;
+  padding: 2rem;
+`;
+export { NavContainer, NavLogo, NavLine, NavButtonDiv };

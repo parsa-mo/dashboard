@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const AreaChart = () => {
-  const width = 800;
+  const width = 1300;
   const height = 500;
   const marginTop = 40;
   const marginRight = 30;
