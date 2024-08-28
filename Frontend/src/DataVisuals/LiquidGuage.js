@@ -3,7 +3,7 @@ import LiquidFillGauge from "react-liquid-gauge";
 import React, { useEffect, useState } from "react";
 import { scaleLinear } from "d3-scale";
 
-const LiquidGuage = ({ WaterLevel, WaterPH }) => {
+const LiquidGuage = ({ WaterLevel = 50, WaterPH }) => {
   const [state, setState] = useState(WaterLevel);
   const [waterPH, setWaterPH] = useState(WaterPH);
 
@@ -62,12 +62,6 @@ const LiquidGuage = ({ WaterLevel, WaterPH }) => {
           const percentStyle = {
             fontSize: textPixels * 0.6,
           };
-          const pHStyle = {
-            fontSize: textPixels * 0.5,
-          };
-          const pHSymbol = {
-            fontSize: textPixels * 0.2,
-          };
 
           return (
             <tspan>
@@ -75,10 +69,6 @@ const LiquidGuage = ({ WaterLevel, WaterPH }) => {
                 {value}
               </tspan>
               <tspan style={percentStyle}>{props.percent}</tspan>
-              <tspan x="0" dy="2em" style={pHStyle}>
-                {waterPH}
-                <tspan style={pHSymbol}> pH</tspan>
-              </tspan>
             </tspan>
           );
         }}

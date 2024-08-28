@@ -6,6 +6,8 @@ import {
   BarChart,
   AreaChart,
   LineChart,
+  Scale,
+  WaterDash,
 } from "../DataVisuals/DataVisuals";
 import {
   Container,
@@ -69,7 +71,16 @@ const Electrolyser = () => {
         </VisualDiv>
         <VisualDiv>
           <SubTitle> Water Level</SubTitle>
-          <LiquidGauge WaterLevel={60} WaterPH={9} />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <LiquidGauge WaterLevel={50} WaterPH={9} />
+            <WaterDash></WaterDash>
+          </div>
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
+          <SubTitle> Unit Weight </SubTitle>
+          <Scale></Scale>
         </VisualDiv>
       </Row>
     </Container>

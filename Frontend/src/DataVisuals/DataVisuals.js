@@ -7,6 +7,8 @@ import AreaChart from "./AreaChart";
 import LineChart from "./LineChart";
 import H2LineChart from "./H2LineChart";
 import DBGauge from "./DBGauge";
+import Scale from "./Scale";
+import WaterDash from "./WaterDash";
 
 export {
   VoltageGauge,
@@ -18,4 +20,6 @@ export {
   LineChart,
   H2LineChart,
   DBGauge,
+  Scale,
+  WaterDash,
 };

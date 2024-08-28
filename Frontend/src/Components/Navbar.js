@@ -5,8 +5,10 @@ import {
   NavLogo,
   NavLine,
   NavButtonDiv,
+  ButtonsDiv,
 } from "../Styles/NavStyle";
-import { Logo } from "../Images/Images";
+import { Logo, HomeIcon } from "../Images/Images";
+import HomeIcon1 from "../Images/HomeIcon1.png";
 
 const Navbar = () => {
   return (
@@ -15,15 +17,28 @@ const Navbar = () => {
         <NavLink to="/">
           <NavLogo src={Logo} alt="Logo"></NavLogo>
         </NavLink>
-        <NavLink to="/environment">
-          <NavButtonDiv>
-            <button className="button-82-pushable" role="button">
-              <span className="button-82-shadow"></span>
-              <span className="button-82-edge"></span>
-              <span className="button-82-front text">Environment</span>
-            </button>
-          </NavButtonDiv>
-        </NavLink>
+        <ButtonsDiv>
+          <NavLink to="/">
+            <NavButtonDiv>
+              <button className="button-82-pushable" role="button">
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">
+                  <img src={HomeIcon1} style={{ width: "40px" }} />
+                </span>
+              </button>
+            </NavButtonDiv>
+          </NavLink>
+          <NavLink to="/environment">
+            <NavButtonDiv>
+              <button className="button-82-pushable" role="button">
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">Environment</span>
+              </button>
+            </NavButtonDiv>
+          </NavLink>
+        </ButtonsDiv>
       </NavContainer>
       <NavLine />
     </>

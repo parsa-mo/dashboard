@@ -19,12 +19,18 @@ const NavLogo = styled.img`
 const NavLine = styled.hr`
   width: 90%;
   border: none;
-  margin: 0 auto 0 auto;
-  border-top: 2px solid black;
+  margin: 2rem auto 0 auto;
+  border-top: 2px solid #ec152a;
 `;
 
 const NavButtonDiv = styled.div`
   display: block;
-  padding: 2rem;
+  padding: 1rem 2rem 0 0;
 `;
-export { NavContainer, NavLogo, NavLine, NavButtonDiv };
+
+const ButtonsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export { NavContainer, NavLogo, NavLine, NavButtonDiv, ButtonsDiv };

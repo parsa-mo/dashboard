@@ -9,6 +9,8 @@ import VoltmeterAC from "./VoltmeterAC.png";
 import Ampmeter from "./Ampmeter.png";
 import AmpmeterSolar from "./AmpmeterSolar.png";
 import AmpmeterAC from "./AmpmeterAC.png";
+import HomeIcon from "./HomeIcon.png";
+import scale from "./scale.jpg";
 
 export {
   Logo,
@@ -22,4 +24,6 @@ export {
   AmpmeterSolar,
   AmpmeterAC,
   Ampmeter,
+  HomeIcon,
+  scale,
 };
