@@ -12,7 +12,6 @@ const Home = () => {
         <NavLink to={"/grid"}>
           <img src={Grid} alt="Grid" style={{ width: "400px" }} />
         </NavLink>
-        <Wire1 />
         <NavLink to={"/electrolyser"}>
           <img
             src={Electrolyzer}
@@ -20,8 +19,6 @@ const Home = () => {
             style={{ width: "400px" }}
           />
         </NavLink>
-        <Wire2 />
-        <Wire3 />
       </Container>
       <Container
         style={{ flexDirection: "row", justifyContent: "space-around" }}

@@ -3,5 +3,5 @@ import Electrolyser from "./Electrolyser";
 import FuelCell from "./FuelCell";
 import Grid from "./Grid";
 import Environment from "./Environment";
-
-export { Home, Electrolyser, FuelCell, Grid, Environment };
+import Chamber from "./Chamber";
+export { Home, Electrolyser, FuelCell, Grid, Environment, Chamber };

@@ -1,4 +1,11 @@
-import { Electrolyser, Home, FuelCell, Grid, Environment } from "./Pages/Pages";
+import {
+  Electrolyser,
+  Home,
+  FuelCell,
+  Grid,
+  Environment,
+  Chamber,
+} from "./Pages/Pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./Components/Components";
 
@@ -12,6 +19,7 @@ function App() {
         <Route path="/fuel_cell" element={<FuelCell />}></Route>
         <Route path="/grid" element={<Grid />}></Route>
         <Route path="/environment" element={<Environment />}></Route>
+        <Route path="/chamber" element={<Chamber />}></Route>
       </Routes>
     </BrowserRouter>
   );

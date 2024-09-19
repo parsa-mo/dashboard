@@ -17,28 +17,47 @@ const Navbar = () => {
         <NavLink to="/">
           <NavLogo src={Logo} alt="Logo"></NavLogo>
         </NavLink>
-        <ButtonsDiv>
-          <NavLink to="/">
-            <NavButtonDiv>
-              <button className="button-82-pushable" role="button">
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">
-                  <img src={HomeIcon1} style={{ width: "40px" }} />
-                </span>
-              </button>
-            </NavButtonDiv>
-          </NavLink>
-          <NavLink to="/environment">
-            <NavButtonDiv>
-              <button className="button-82-pushable" role="button">
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Environment</span>
-              </button>
-            </NavButtonDiv>
-          </NavLink>
-        </ButtonsDiv>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <ButtonsDiv>
+            <NavLink to="/chamber">
+              <NavButtonDiv>
+                <button className="button-82-pushable" role="button">
+                  <span className="button-82-shadow"></span>
+                  <span className="button-82-edge"></span>
+                  <span className="button-82-front text">Chamber</span>
+                </button>
+              </NavButtonDiv>
+            </NavLink>
+            <NavLink to="/environment">
+              <NavButtonDiv>
+                <button className="button-82-pushable" role="button">
+                  <span className="button-82-shadow"></span>
+                  <span className="button-82-edge"></span>
+                  <span className="button-82-front text">Environment</span>
+                </button>
+              </NavButtonDiv>
+            </NavLink>
+          </ButtonsDiv>
+          <ButtonsDiv>
+            <NavLink to="/">
+              <NavButtonDiv>
+                <button className="button-82-pushable" role="button">
+                  <span className="button-82-shadow"></span>
+                  <span className="button-82-edge"></span>
+                  <span className="button-82-front text">
+                    <img src={HomeIcon1} style={{ width: "80px" }} />
+                  </span>
+                </button>
+              </NavButtonDiv>
+            </NavLink>
+          </ButtonsDiv>
+        </div>
       </NavContainer>
       <NavLine />
     </>

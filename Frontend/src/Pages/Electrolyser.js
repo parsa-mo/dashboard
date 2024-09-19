@@ -48,6 +48,7 @@ const Electrolyser = () => {
 
       <Row>
         <VisualDiv>
+          <SubTitle>Humidity </SubTitle>
           <AreaChart name="Humidity"></AreaChart>
         </VisualDiv>
         <VisualDiv>
