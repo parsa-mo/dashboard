@@ -19,7 +19,10 @@ import {
   Valve9,
   Valve10,
   Valve11,
-} from "../Valves/valves";
+  GaugeOne,
+  GaugeTwo,
+  GaugeThree,
+} from "../ChamberComponents/chamberComponents";
 
 const Chamber = () => {
   return (
@@ -44,6 +47,36 @@ const Chamber = () => {
           <Valve9 />
           <Valve10 />
           <Valve11 />
+
+          <div
+            style={{
+              position: "absolute",
+              top: "300px",
+              left: "1530px",
+            }}
+          >
+            <GaugeOne id="dial2" value="172.62" title="PSI" />
+          </div>
+
+          <div
+            style={{
+              position: "absolute",
+              top: "1540px",
+              left: "715px",
+            }}
+          >
+            <GaugeTwo id="dial2" value="27" title="PSI" />
+          </div>
+
+          <div
+            style={{
+              position: "absolute",
+              top: "1730px",
+              left: "-160px",
+            }}
+          >
+            <GaugeThree id="dial3" value="0" title="PSI" />
+          </div>
         </VisualDiv>
       </Row>
     </Container>

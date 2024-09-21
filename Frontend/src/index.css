@@ -18,6 +18,8 @@ code {
   font-style: normal;
 }
 
+/* NAV BUTTONS STYLING*/
+
     /* CSS */
   .button-82-pushable {
     position: relative;
@@ -69,7 +71,7 @@ code {
   position: relative;
   padding: 12px 27px;
   border-radius: 12px;
-  font-size: 1.1rem;
+  font-size: 2.1rem;
   color: white;
   background: hsl(354, 85%, 50%);
   will-change: transform;
@@ -82,7 +84,7 @@ code {
 
 @media (min-width: 768px) {
   .button-82-front {
-    font-size: 1.25rem;
+    font-size: 2.25rem;
     padding: 12px 42px;
   }
 }

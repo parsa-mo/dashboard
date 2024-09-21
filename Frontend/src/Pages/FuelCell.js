@@ -28,6 +28,8 @@ const FuelCell = () => {
             logo={{ ampmeter: AmpmeterAC, voltmeter: VoltmeterAC }}
           ></VoltageGauge>
         </VisualDiv>
+      </Row>
+      <Row>
         <VisualDiv>
           <SubTitle>Temperature</SubTitle>
           <TemperatureGauge temperature={400} optimalTemp={400} numLabels={9} />

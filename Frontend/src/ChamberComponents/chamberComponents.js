@@ -9,6 +9,9 @@ import Valve8 from "./Valve8";
 import Valve9 from "./Valve9";
 import Valve10 from "./Valve10";
 import Valve11 from "./Valve11";
+import GaugeOne from "./GaugeOne";
+import GaugeTwo from "./GaugeTwo";
+import GaugeThree from "./GaugeThree";
 
 export {
   Valve1,
@@ -22,4 +25,7 @@ export {
   Valve9,
   Valve10,
   Valve11,
+  GaugeOne,
+  GaugeTwo,
+  GaugeThree,
 };

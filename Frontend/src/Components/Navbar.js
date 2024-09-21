@@ -51,7 +51,7 @@ const Navbar = () => {
                   <span className="button-82-shadow"></span>
                   <span className="button-82-edge"></span>
                   <span className="button-82-front text">
-                    <img src={HomeIcon1} style={{ width: "80px" }} />
+                    <img src={HomeIcon1} style={{ width: "120px" }} />
                   </span>
                 </button>
               </NavButtonDiv>

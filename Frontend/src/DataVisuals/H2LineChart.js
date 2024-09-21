@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const H2LineChart = () => {
-  const width = 1400;
+  const width = 1600;
   const height = 800;
   const marginTop = 40;
-  const marginRight = 150;
-  const marginLeft = 100;
-  const marginBottom = 100;
+  const marginRight = 180;
+  const marginLeft = 140;
+  const marginBottom = 120;
   const svgRef = useRef();
 
   const [data, setData] = useState([{ time: 0, hydrogen: 100 }]);
@@ -59,7 +59,7 @@ const H2LineChart = () => {
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "red")
-      .attr("stroke-width", 2)
+      .attr("stroke-width", "5px")
       .attr("d", hydrogenLine);
 
     svg
@@ -69,40 +69,40 @@ const H2LineChart = () => {
       .call(
         d3
           .axisBottom(x)
-          .ticks(width / 80)
+          .ticks(width / 250)
           .tickSizeOuter(0),
       )
       .selectAll("text")
-      .style("font-size", "2em")
+      .attr("dy", "45px")
+      .style("font-size", "4em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
     svg
       .select(".xAxis")
       .selectAll("path")
-      .style("stroke-width", "3px")
+      .style("stroke-width", "5px")
       .style("stroke", "white");
     svg
       .select(".xAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "3px")
+      .style("stroke-width", "5px")
       .style("stroke", "white");
 
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", 770)
+      .attr("y", 800)
       .attr("fill", "white")
       .attr("text-anchor", "middle")
       .text("Seconds")
-      .style("font-size", "1.5em")
-      .style("font-weight", "bold");
+      .style("font-size", "3.2em");
 
     svg
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
       .attr("class", "yAxis")
-      .call(d3.axisLeft(y).ticks(height / 70))
+      .call(d3.axisLeft(y).ticks(height / 200))
       .call((g) =>
         g
           .selectAll(".tick line")
@@ -111,7 +111,8 @@ const H2LineChart = () => {
           .attr("stroke-opacity", 0.1),
       )
       .selectAll("text")
-      .style("font-size", "2em")
+      .attr("dx", "-10px")
+      .style("font-size", "4em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
@@ -120,23 +121,22 @@ const H2LineChart = () => {
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -(height - marginBottom) / 2)
-      .attr("y", -60)
+      .attr("y", -105)
       .attr("fill", "currentColor")
       .attr("text-anchor", "middle")
       .text("Volume (L)")
-      .style("font-weight", "bold")
-      .style("font-size", "2em")
+      .style("font-size", "4em")
       .style("fill", "white");
 
     svg
       .select(".yAxis")
       .selectAll("path")
-      .style("stroke-width", "3px")
+      .style("stroke-width", "5px")
       .style("stroke", "white");
     svg
       .select(".yAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "3px")
+      .style("stroke-width", "5px")
       .style("stroke", "white");
 
     const legend = svg
@@ -148,10 +148,10 @@ const H2LineChart = () => {
 
     legend
       .append("rect")
-      .attr("x", 130)
-      .attr("y", 0)
-      .attr("width", 20)
-      .attr("height", 20)
+      .attr("x", 110)
+      .attr("y", -15)
+      .attr("width", 40)
+      .attr("height", 40)
       .attr("fill", "red");
 
     legend
@@ -160,7 +160,7 @@ const H2LineChart = () => {
       .attr("y", 16)
       .attr("fill", "white")
       .text("Hydrogen")
-      .style("font-size", "1.2em");
+      .style("font-size", "2em");
   }, [data]);
 
   return (

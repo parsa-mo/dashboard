@@ -13,7 +13,7 @@ const Div = styled.div`
 const Square = styled.div`
   height: auto;
   margin-left: 40px;
-  border: solid 8px white;
+  border: solid 10px white;
   border-radius: 20px;
 `;
 
@@ -27,6 +27,7 @@ const HR = styled.hr`
 const P = styled.p`
   display: flex;
   align-items: center;
+  font-size: 1.5em;
 `;
 
 export { Square, Div, HR, P };

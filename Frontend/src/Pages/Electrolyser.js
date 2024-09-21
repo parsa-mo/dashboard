@@ -64,12 +64,10 @@ const Electrolyser = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <SubTitle>Power</SubTitle>
-          <VoltageGauge
-            voltage={24}
-            logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
-          />
+          <SubTitle> Unit Weight </SubTitle>
+          <Scale></Scale>
         </VisualDiv>
+
         <VisualDiv>
           <SubTitle> Water Level</SubTitle>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -80,8 +78,11 @@ const Electrolyser = () => {
       </Row>
       <Row>
         <VisualDiv>
-          <SubTitle> Unit Weight </SubTitle>
-          <Scale></Scale>
+          <SubTitle>Power</SubTitle>
+          <VoltageGauge
+            voltage={24}
+            logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
+          />
         </VisualDiv>
       </Row>
     </Container>

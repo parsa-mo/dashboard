@@ -10,7 +10,7 @@ const NavContainer = styled.div`
 `;
 
 const NavLogo = styled.img`
-  width: 200px;
+  width: 400px;
   object-fit: contain;
   padding: 2rem;
   border-radius: 40px;
