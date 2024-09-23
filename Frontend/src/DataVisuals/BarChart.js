@@ -8,8 +8,8 @@ const BarChart = ({
   ],
 }) => {
   const margin = { top: 20, right: 30, bottom: 55, left: 90 };
-  const width = 550 - margin.left - margin.right;
-  const height = 600 - margin.top - margin.bottom;
+  const width = window.innerWidth * 0.45 - margin.left - margin.right;
+  const height = window.innerHeight * 0.2 - margin.top - margin.bottom;
 
   const ref = useRef(null);
 

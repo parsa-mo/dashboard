@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const AreaChart = () => {
-  const width = 1200;
-  const height = 600;
-  const marginTop = 40;
-  const marginRight = 80;
-  const marginLeft = 150;
-  const marginBottom = 130;
+  const width = window.innerWidth * 0.45;
+  const height = window.innerHeight * 0.2;
+  const marginTop = 0;
+  const marginRight = 40;
+  const marginLeft = 100;
+  const marginBottom = 100;
   const svgRef = useRef();
 
   // Initial Data
@@ -70,8 +70,8 @@ const AreaChart = () => {
           .tickSizeOuter(0),
       )
       .selectAll("text")
-      .attr("dy", "45")
-      .style("font-size", "5em")
+      .attr("dy", "25")
+      .style("font-size", "2.5em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
@@ -79,23 +79,23 @@ const AreaChart = () => {
     svg
       .select(".xAxis")
       .selectAll("path")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set axis line color to white
     svg
       .select(".xAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set tick line color to white
 
     // Add x-axis label
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", 600)
+      .attr("y", 450)
       .attr("fill", "white")
       .attr("text-anchor", "middle")
       .text("Seconds")
-      .style("font-size", "3em");
+      .style("font-size", "1.5em");
 
     // Add the y-axis, add grid lines and a label
     svg
@@ -111,7 +111,7 @@ const AreaChart = () => {
           .attr("stroke-opacity", 0.1),
       )
       .selectAll("text")
-      .style("font-size", "5em")
+      .style("font-size", "2.5em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
@@ -120,23 +120,23 @@ const AreaChart = () => {
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -(height - marginBottom) / 2)
-      .attr("y", -90)
+      .attr("y", -55)
       .attr("fill", "currentColor")
       .attr("text-anchor", "middle")
       .text("Humidity")
-      .style("font-size", "4em")
+      .style("font-size", "2em")
       .style("fill", "white");
 
     //Make y-axis line and ticks white
     svg
       .select(".yAxis")
       .selectAll("path")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set axis line color to white
     svg
       .select(".yAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set tick line color to white
   }, [data]);
 

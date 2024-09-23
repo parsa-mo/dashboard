@@ -20,7 +20,7 @@ const Container = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: center;
-  padding-bottom: 4rem;
+  padding-bottom: 2.5rem;
 `;
 
 const VisualDiv = styled.div`
@@ -33,15 +33,15 @@ const VisualDiv = styled.div`
   background-color: rgba(104, 103, 103, 0.48);
   border-radius: 60px;
   margin: 0 30px;
-  padding-bottom: 80px;
+  padding-bottom: 30px;
 `;
 
 const Title = styled.h1`
   display: block;
   text-align: center;
   color: white;
-  font-size: 6rem;
-  margin: 20px;
+  font-size: 3.5rem;
+  margin: 20px 0 0 0;
 `;
 
 const SubTitle = styled.h1`
@@ -49,7 +49,7 @@ const SubTitle = styled.h1`
   position: relative;
   text-align: center;
   color: white;
-  font-size: 4rem;
+  font-size: 2.5rem;
   top: 10;
 `;
 
