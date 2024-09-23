@@ -7,15 +7,18 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
   const minTemp = -optimalTemp;
   const maxTemp = optimalTemp * 3;
   useEffect(() => {
-    const svg = d3.select(ref.current).attr("width", 500).attr("height", 400);
+    const svg = d3
+      .select(ref.current)
+      .attr("width", window.innerWidth * 0.45)
+      .attr("height", window.innerHeight * 0.175);
 
     svg.selectAll("*").remove(); // Clear previous content
 
-    const width = 500;
-    const height = 500;
+    const width = window.innerWidth * 0.45;
+    const height = window.innerHeight * 0.2;
     const innerRadius = 180;
-    const outerRadius = Math.min(width, height) / 2 - 40;
-    const labelRadius = outerRadius + 20;
+    const outerRadius = Math.min(width, height) / 2 - 20;
+    const labelRadius = outerRadius + 40;
 
     // Define the gradient
     const defs = svg.append("defs");
@@ -69,12 +72,12 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
     svg
       .append("path")
       .attr("d", arc)
-      .attr("transform", `translate(${width / 2},${height / 2})`)
+      .attr("transform", `translate(${width / 2},${height / 1.5})`)
       .style("fill", "url(#temp-gradient)");
 
     // Needle
     const needleAngle = temperatureScale(temperature);
-    const needleLength = innerRadius - 15;
+    const needleLength = innerRadius - 35;
     const needleWidth = 40;
     const needleHeadLength = 10; // Length of the rounded head
     const needleData = [
@@ -97,7 +100,7 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
       .attr("d", lineGenerator)
       .attr(
         "transform",
-        `translate(${width / 2},${height / 2}) rotate(${(needleAngle * 180) / Math.PI})`,
+        `translate(${width / 2},${height / 1.5}) rotate(${(needleAngle * 180) / Math.PI})`,
       )
       .style("fill", "#000");
 
@@ -111,15 +114,16 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
       const temp = labelScale(i);
       const angle = temperatureScale(temp);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
-      const yLabel = height / 2 + labelRadius * Math.sin(angle - Math.PI / 2);
+      const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
       // Draw line from label to outer arc
-      const lineLength = 30; // Adjust this value to control line length
+      const lineLength = 0; // Adjust this value to control line length
 
       const xArc =
         width / 2 + (outerRadius - lineLength) * Math.cos(angle - Math.PI / 2);
       const yArc =
-        height / 2 + (outerRadius - lineLength) * Math.sin(angle - Math.PI / 2);
+        height / 1.5 +
+        (outerRadius - lineLength) * Math.sin(angle - Math.PI / 2);
 
       svg
         .append("line")
@@ -146,9 +150,9 @@ const TemperatureGauge = ({ temperature, optimalTemp = 90, numLabels = 7 }) => {
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "1em")
-      .attr("transform", `translate(${width / 2},${height / 2 + 30})`)
+      .attr("transform", `translate(${width / 2},${height / 1.4})`)
       .text(`${temperature}°C`)
-      .style("font-size", "3rem")
+      .style("font-size", "2rem")
       .style("fill", "#ffffff");
   }, [temperature, minTemp, maxTemp, optimalTemp, numLabels]);
 

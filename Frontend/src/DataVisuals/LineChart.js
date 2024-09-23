@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const LineChart = () => {
-  const width = 1600;
-  const height = 800;
+  const width = window.innerWidth * 0.82;
+  const height = window.innerHeight * 0.25;
   const marginTop = 40;
-  const marginRight = 180;
-  const marginLeft = 140;
-  const marginBottom = 120;
+  const marginRight = 100;
+  const marginLeft = 130;
+  const marginBottom = 80;
   const svgRef = useRef();
 
   const [data, setData] = useState([
@@ -73,7 +73,7 @@ const LineChart = () => {
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "green")
-      .attr("stroke-width", "5px")
+      .attr("stroke-width", "3px")
       .attr("d", oxygenLine);
 
     svg
@@ -81,7 +81,7 @@ const LineChart = () => {
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "red")
-      .attr("stroke-width", "5px")
+      .attr("stroke-width", "3px")
       .attr("d", hydrogenLine);
 
     svg
@@ -89,7 +89,7 @@ const LineChart = () => {
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "steelblue")
-      .attr("stroke-width", "5px")
+      .attr("stroke-width", "3px")
       .attr("d", waterLine);
 
     svg
@@ -99,40 +99,40 @@ const LineChart = () => {
       .call(
         d3
           .axisBottom(x)
-          .ticks(width / 250)
+          .ticks(width / 100)
           .tickSizeOuter(0),
       )
       .selectAll("text")
-      .attr("dy", "45px")
-      .style("font-size", "4em")
+      .attr("dy", "20px")
+      .style("font-size", "2em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
     svg
       .select(".xAxis")
       .selectAll("path")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white");
     svg
       .select(".xAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white");
 
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", 800)
+      .attr("y", 455)
       .attr("fill", "white")
       .attr("text-anchor", "middle")
       .text("Seconds")
-      .style("font-size", "3.2em");
+      .style("font-size", "1.5em");
 
     svg
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
       .attr("class", "yAxis")
-      .call(d3.axisLeft(y).ticks(height / 200))
+      .call(d3.axisLeft(y).ticks(height / 50))
       .call((g) =>
         g
           .selectAll(".tick line")
@@ -142,7 +142,7 @@ const LineChart = () => {
       )
       .selectAll("text")
       .attr("dx", "-10px")
-      .style("font-size", "4em")
+      .style("font-size", "1.75em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
@@ -151,11 +151,11 @@ const LineChart = () => {
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -(height - marginBottom) / 2)
-      .attr("y", -105)
+      .attr("y", -75)
       .attr("fill", "currentColor")
       .attr("text-anchor", "middle")
       .text("Volume (L)")
-      .style("font-size", "4em")
+      .style("font-size", "2em")
       .style("fill", "white");
 
     svg
@@ -178,51 +178,51 @@ const LineChart = () => {
 
     legend
       .append("rect")
-      .attr("x", 120)
-      .attr("y", -8)
-      .attr("width", 30)
-      .attr("height", 30)
+      .attr("x", 125)
+      .attr("y", -10)
+      .attr("width", 15)
+      .attr("height", 15)
       .attr("fill", "green");
 
     legend
       .append("text")
-      .attr("x", 160)
-      .attr("y", 15)
+      .attr("x", 145)
+      .attr("y", 5)
       .attr("fill", "white")
-      .text("Oxygen")
-      .style("font-size", "2em");
+      .text("O2")
+      .style("font-size", "1.25em");
 
     legend
       .append("rect")
-      .attr("x", 120)
-      .attr("y", 45)
-      .attr("width", 30)
-      .attr("height", 30)
+      .attr("x", 125)
+      .attr("y", 15)
+      .attr("width", 15)
+      .attr("height", 15)
       .attr("fill", "red");
 
     legend
       .append("text")
-      .attr("x", 160)
-      .attr("y", 70)
+      .attr("x", 145)
+      .attr("y", 30)
       .attr("fill", "white")
-      .text("Hydrogen")
-      .style("font-size", "2em");
+      .text("H")
+      .style("font-size", "1.25em");
 
     legend
       .append("rect")
-      .attr("x", 120)
-      .attr("y", 100)
-      .attr("width", 30)
-      .attr("height", 30)
+      .attr("x", 125)
+      .attr("y", 40)
+      .attr("width", 15)
+      .attr("height", 15)
       .attr("fill", "steelblue");
 
     legend
       .append("text")
-      .attr("x", 160)
-      .attr("y", 125)
+      .attr("x", 145)
+      .attr("y", 55)
       .attr("fill", "white")
-      .text("Water")
-      .style("font-size", "2em");
+      .text("H2O")
+      .style("font-size", "1.25em");
   }, [data]);
 
   return (

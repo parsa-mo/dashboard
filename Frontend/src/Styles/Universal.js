@@ -32,15 +32,15 @@ const VisualDiv = styled.div`
   align-items: center;
   background-color: rgba(104, 103, 103, 0.48);
   border-radius: 60px;
-  margin: 0 30px;
-  padding-bottom: 30px;
+  margin: 0 20px;
+  padding-bottom: 20px;
 `;
 
 const Title = styled.h1`
   display: block;
   text-align: center;
   color: white;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   margin: 20px 0 0 0;
 `;
 
@@ -49,7 +49,7 @@ const SubTitle = styled.h1`
   position: relative;
   text-align: center;
   color: white;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   top: 10;
 `;
 

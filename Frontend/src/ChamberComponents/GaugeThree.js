@@ -19,7 +19,7 @@ const GaugeThree = ({ id, value, title }) => {
   return (
     <div style={styles.dial}>
       <Chart
-        height={300}
+        height={150}
         chartType="Gauge"
         loader={<div></div>}
         data={[

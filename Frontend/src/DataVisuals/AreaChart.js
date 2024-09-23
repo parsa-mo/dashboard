@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 const AreaChart = () => {
-  const width = window.innerWidth * 0.45;
+  const width = window.innerWidth * 0.6;
   const height = window.innerHeight * 0.2;
-  const marginTop = 0;
-  const marginRight = 40;
+  const marginTop = 10;
+  const marginRight = 60;
   const marginLeft = 100;
-  const marginBottom = 100;
+  const marginBottom = 70;
   const svgRef = useRef();
 
   // Initial Data
@@ -66,12 +66,12 @@ const AreaChart = () => {
       .call(
         d3
           .axisBottom(x)
-          .ticks(width / 250)
+          .ticks(width / 100)
           .tickSizeOuter(0),
       )
       .selectAll("text")
-      .attr("dy", "25")
-      .style("font-size", "2.5em")
+      .attr("dy", "20")
+      .style("font-size", "2em")
       .style("font-weight", "bold")
       .style("fill", "white");
 
@@ -91,18 +91,18 @@ const AreaChart = () => {
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", 450)
+      .attr("y", 360)
       .attr("fill", "white")
       .attr("text-anchor", "middle")
       .text("Seconds")
-      .style("font-size", "1.5em");
+      .style("font-size", "1.25em");
 
     // Add the y-axis, add grid lines and a label
     svg
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
       .attr("class", "yAxis")
-      .call(d3.axisLeft(y).ticks(height / 250))
+      .call(d3.axisLeft(y).ticks(height / 100))
       .call((g) =>
         g
           .selectAll(".tick line")
@@ -111,7 +111,7 @@ const AreaChart = () => {
           .attr("stroke-opacity", 0.1),
       )
       .selectAll("text")
-      .style("font-size", "2.5em")
+      .style("font-size", "2em")
       .style("font-weight", "bold")
       .style("fill", "white");
 

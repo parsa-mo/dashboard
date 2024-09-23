@@ -45,8 +45,6 @@ const Environment = () => {
             ]}
           ></BarChart>
         </VisualDiv>
-      </Row>
-      <Row>
         <VisualDiv>
           <SubTitle>Humidity</SubTitle>
           <AreaChart></AreaChart>

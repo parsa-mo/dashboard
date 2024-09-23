@@ -34,7 +34,7 @@ const Chamber = () => {
       </Row>
       <Row>
         <VisualDiv style={{ backgroundColor: "white", position: "relative" }}>
-          <img src={chambers} alt="chambers" />
+          <img src={chambers} alt="chambers" style={{ width: "90vw" }} />
 
           <Valve1 />
           <Valve2 />
@@ -51,8 +51,8 @@ const Chamber = () => {
           <div
             style={{
               position: "absolute",
-              top: "300px",
-              left: "1530px",
+              top: "30px",
+              left: "755px",
             }}
           >
             <GaugeOne id="dial2" value="172.62" title="PSI" />
@@ -61,8 +61,8 @@ const Chamber = () => {
           <div
             style={{
               position: "absolute",
-              top: "1540px",
-              left: "715px",
+              top: "625px",
+              left: "352px",
             }}
           >
             <GaugeTwo id="dial2" value="27" title="PSI" />
@@ -71,8 +71,8 @@ const Chamber = () => {
           <div
             style={{
               position: "absolute",
-              top: "1730px",
-              left: "-160px",
+              top: "713px",
+              left: "-63px",
             }}
           >
             <GaugeThree id="dial3" value="0" title="PSI" />

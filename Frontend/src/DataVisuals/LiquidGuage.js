@@ -12,7 +12,7 @@ const LiquidGuage = ({ WaterLevel = 50, WaterPH }) => {
     setWaterPH(WaterPH);
   }, [WaterLevel, WaterPH]);
 
-  const radius = 200;
+  const radius = 150;
 
   // Define a color scale for pH value
   const pHColorScale = scaleLinear()
@@ -42,7 +42,7 @@ const LiquidGuage = ({ WaterLevel = 50, WaterPH }) => {
   ];
 
   return (
-    <div style={{ paddingBottom: "30px" }}>
+    <div style={{ paddingBottom: "30px", paddingLeft: "30px" }}>
       <LiquidFillGauge
         style={{ margin: "0 auto" }}
         width={radius * 2}

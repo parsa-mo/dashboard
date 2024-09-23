@@ -7,8 +7,8 @@ const BarChart = ({
     { Name: "Hydrogen", FlowRate: 4 },
   ],
 }) => {
-  const margin = { top: 20, right: 30, bottom: 55, left: 90 };
-  const width = window.innerWidth * 0.45 - margin.left - margin.right;
+  const margin = { top: 20, right: 40, bottom: 55, left: 90 };
+  const width = window.innerWidth * 0.3 - margin.left - margin.right;
   const height = window.innerHeight * 0.2 - margin.top - margin.bottom;
 
   const ref = useRef(null);
@@ -27,7 +27,7 @@ const BarChart = ({
     const x_scale = d3
       .scaleBand()
       .range([0, width])
-      .padding(0.4)
+      .padding(0.5)
       .domain(data.map((d) => d.Name));
 
     const maxFlowRate = d3.max(data, (d) => d.FlowRate);
@@ -68,7 +68,7 @@ const BarChart = ({
       .attr("class", "bar-label")
       .attr("x", (d) => x_scale(d.Name) + x_scale.bandwidth() / 2)
       .attr("y", (d) => y_scale(d.FlowRate) - 20) // Adjust the position as needed
-      .style("font-size", "2.5em")
+      .style("font-size", "1.25em")
       .style("font-weight", "bold")
       .style("text-anchor", "middle")
       .style("fill", "white") // Set text color to white
@@ -83,19 +83,19 @@ const BarChart = ({
 
       .call(xAxis)
       .selectAll("text")
-      .attr("dy", "35px")
-      .style("font-size", "4em")
+      .attr("dy", "25px")
+      .style("font-size", "1.75em")
       .style("fill", "white"); // Set text color to white
 
     svg
       .select(".xAxis")
       .selectAll("path")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set axis line color to white
     svg
       .select(".xAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set tick line color to white
 
     // Adding the y-axis
@@ -106,19 +106,19 @@ const BarChart = ({
       .attr("class", "yAxis")
       .selectAll("text")
       .attr("x", -15)
-      .style("font-size", "3.5em")
+      .style("font-size", "2em")
       .style("padding-right", "10px")
       .style("fill", "white"); // Set text color to white
 
     svg
       .select(".yAxis")
       .selectAll("path")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set axis line color to white
     svg
       .select(".yAxis")
       .selectAll(".tick line")
-      .style("stroke-width", "5px")
+      .style("stroke-width", "3px")
       .style("stroke", "white"); // Set tick line color to white
 
     // Adding the y-axis label
@@ -127,9 +127,9 @@ const BarChart = ({
       .attr("transform", "rotate(-90)")
       .attr("y", 0 - margin.left)
       .attr("x", 0 - height / 2)
-      .attr("dy", "30px")
+      .attr("dy", "40px")
       .style("text-anchor", "middle")
-      .style("font-size", "2.5em")
+      .style("font-size", "1.25em")
       .style("fill", "white") // Set text color to white
       .text("Gas Flow (L/min)");
   }, [data]);

@@ -16,8 +16,8 @@ const Valve3 = () => {
         position: "absolute",
         width: "15%",
         transform: isRotated ? "rotate(0deg)" : "rotate(90deg)", // Toggle between 90 and 0 degrees
-        top: "948px",
-        left: "1060px",
+        top: "343px",
+        left: "525px",
         transformOrigin: "25%", // Rotate from the right end
         cursor: "pointer",
         transition: "transform 0.3s ease", // Smooth transition between rotations

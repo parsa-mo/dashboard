@@ -1,22 +1,22 @@
 import styled from "@emotion/styled";
 
 const Img = styled.img`
-  width: 400px;
+  width: 300px;
   border-radius: 10px;
 `;
 
 const Label = styled.span`
   position: absolute;
-  top: 57%;
-  left: 70%;
-  font-size: 4rem;
+  top: 60%;
+  left: 72%;
+  font-size: 3rem;
   color: #28313e;
 `;
 
 const Text = styled.span`
   font-family: "DSDIGI";
   position: absolute;
-  font-size: 10rem;
+  font-size: 8rem;
   color: #28313e;
   top: 45%;
   left: 30%;
