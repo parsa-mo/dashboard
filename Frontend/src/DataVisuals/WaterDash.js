@@ -16,15 +16,13 @@ const WaterDash = ({ Purity = 100, PH = 7, Pressure = 20 }) => {
     <Div>
       <Square>
         <Div>
-          <P>{pH} pH</P>
+          <P>{pH}</P>
+          <P>pH</P>
         </Div>
         <HR />
         <Div>
-          <P>{Pressure} psi</P>
-        </Div>
-        <HR />
-        <Div>
-          <P> {Purity} ppm</P>
+          <P>N/A </P>
+          <P>psi</P>
         </Div>
       </Square>
     </Div>

@@ -27,7 +27,8 @@ const HR = styled.hr`
 const P = styled.p`
   display: flex;
   align-items: center;
-  font-size: 2.2em;
+  font-size: 2em;
+  padding: 0 3px;
 `;
 
 export { Square, Div, HR, P };

@@ -10,7 +10,7 @@ const Main = styled.main`
 
 const Container = styled.div`
   width: 100%;
-  padding: 3rem;
+  padding: 3rem 3rem 0 3rem;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
@@ -25,7 +25,6 @@ const Row = styled.div`
 
 const VisualDiv = styled.div`
   ///background-color: darkgray;
-  width: 80vw;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -38,6 +37,7 @@ const VisualDiv = styled.div`
 
 const Title = styled.h1`
   display: block;
+  width: 80vw;
   text-align: center;
   color: white;
   font-size: 2.5rem;
@@ -53,44 +53,10 @@ const SubTitle = styled.h1`
   top: 10;
 `;
 
-//Wires
-const Wire1 = styled.hr`
-  width: 680px;
-  position: absolute;
-  border: solid 3px black;
-  top: 400px;
-  z-index: -1;
+const Divider = styled.hr`
+  width: 90vw;
+  border: solid crimson 3px;
+  border-radius: 40px;
 `;
 
-const Wire2 = styled.hr`
-  width: 22vw;
-  position: absolute;
-  border: solid 3px black;
-  background: black;
-  top: 715px;
-  left: 460px;
-
-  transform: rotate(45deg);
-`;
-
-const Wire3 = styled.hr`
-  width: 20.5vw;
-  position: absolute;
-  border: solid 3px black;
-  background: black;
-  top: 700px;
-  left: 1020px;
-  transform: rotate(-45deg);
-`;
-
-export {
-  Main,
-  Container,
-  VisualDiv,
-  Title,
-  Row,
-  Wire1,
-  Wire3,
-  Wire2,
-  SubTitle,
-};
+export { Main, Container, VisualDiv, Title, Row, SubTitle, Divider };

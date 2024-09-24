@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { scale } from "../Images/Images";
 import { Img, Text, Container, Div, Label } from "../Styles/ScaleStyles";
 
-const Scale = ({ Weight = 20 }) => {
+const Scale = ({ Weight = "N/A" }) => {
   const [weight, setWeight] = React.useState(0);
   useEffect(() => {
     setWeight(Weight);
@@ -12,7 +12,7 @@ const Scale = ({ Weight = 20 }) => {
       <Container>
         <Img src={scale} alt="Scale" />
         <Text>{weight}</Text>
-        <Label>g</Label>
+        {/*<Label>g</Label>*/}
       </Container>
     </Div>
   );

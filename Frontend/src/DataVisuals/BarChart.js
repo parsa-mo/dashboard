@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 
 const BarChart = ({
   data = [
-    { Name: "Oxygen", FlowRate: 3 },
+    { Name: "Oxygen", FlowRate: 0 },
     { Name: "Hydrogen", FlowRate: 4 },
   ],
 }) => {
@@ -17,6 +17,9 @@ const BarChart = ({
     // Clear previous content
     d3.select(ref.current).selectAll("*").remove();
 
+    // Filter out data where FlowRate is 0
+    const filteredData = data.filter((d) => d.FlowRate > 0);
+
     const svg = d3
       .select(ref.current)
       .attr("width", width + margin.left + margin.right)
@@ -24,21 +27,28 @@ const BarChart = ({
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
+    // Re-calculate x_scale and y_scale
     const x_scale = d3
       .scaleBand()
       .range([0, width])
       .padding(0.5)
-      .domain(data.map((d) => d.Name));
+      .domain(filteredData.map((d) => d.Name));
 
-    const maxFlowRate = d3.max(data, (d) => d.FlowRate);
+    // Adjust the centering if only one bar is present
+    if (filteredData.length === 1) {
+      const singleBarWidth = x_scale.bandwidth();
+      const centeredX = (width - singleBarWidth) / 2;
+      x_scale.range([centeredX, centeredX + singleBarWidth]);
+    }
+
+    const maxFlowRate = d3.max(filteredData, (d) => d.FlowRate);
     const yMaxValue = maxFlowRate + maxFlowRate * 0.1;
-
     const y_scale = d3.scaleLinear().range([height, 0]).domain([0, yMaxValue]);
 
     // Adding the bars to show data
     svg
       .selectAll("rect")
-      .data(data)
+      .data(filteredData)
       .enter()
       .append("rect")
       .attr("class", "bar")
@@ -53,7 +63,7 @@ const BarChart = ({
     // Update bars with new data
     svg
       .selectAll("rect")
-      .data(data)
+      .data(filteredData)
       .transition()
       .duration(2000) // Animation duration in milliseconds
       .attr("y", (d) => y_scale(d.FlowRate))
@@ -62,7 +72,7 @@ const BarChart = ({
     // Flow number label inside each bar
     svg
       .selectAll(".bar-label")
-      .data(data)
+      .data(filteredData)
       .enter()
       .append("text")
       .attr("class", "bar-label")
@@ -75,23 +85,26 @@ const BarChart = ({
       .text((d) => d.FlowRate + " L/min");
 
     // Adding the x-axis
-    const xAxis = d3.axisBottom(x_scale);
+    const xAxis = d3.axisBottom(x_scale).tickSizeOuter(0);
+
     svg
       .append("g")
       .attr("transform", `translate(0,${height})`)
       .attr("class", "xAxis")
-
       .call(xAxis)
       .selectAll("text")
       .attr("dy", "25px")
       .style("font-size", "1.75em")
       .style("fill", "white"); // Set text color to white
 
+    // Adjust x-axis line to ensure it spans the entire width
     svg
       .select(".xAxis")
-      .selectAll("path")
+      .select("path.domain")
+      .attr("d", `M0.5,0.5H${width}`) // Ensure x-axis line spans full width
       .style("stroke-width", "3px")
-      .style("stroke", "white"); // Set axis line color to white
+      .style("stroke", "white");
+
     svg
       .select(".xAxis")
       .selectAll(".tick line")

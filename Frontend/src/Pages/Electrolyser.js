@@ -8,6 +8,8 @@ import {
   LineChart,
   Scale,
   WaterDash,
+  DecibelGauge,
+  NoiseLineChart,
 } from "../DataVisuals/DataVisuals";
 import {
   Container,
@@ -48,6 +50,15 @@ const Electrolyser = () => {
 
       <Row>
         <VisualDiv>
+          <SubTitle>Noise </SubTitle>
+          <VisualDiv style={{ flexDirection: "row" }}>
+            <NoiseLineChart></NoiseLineChart>
+            <DecibelGauge decibel={50}></DecibelGauge>{" "}
+          </VisualDiv>{" "}
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
           <SubTitle>Humidity </SubTitle>
           <AreaChart name="Humidity"></AreaChart>
         </VisualDiv>
@@ -56,15 +67,10 @@ const Electrolyser = () => {
           <BarChart name="GasFlow"></BarChart>
         </VisualDiv>
       </Row>
+
       <Row>
         <VisualDiv>
-          <SubTitle>Total Production/Usage</SubTitle>
-          <LineChart name="Gas Production"></LineChart>
-        </VisualDiv>
-      </Row>
-      <Row>
-        <VisualDiv>
-          <SubTitle> Unit Weight </SubTitle>
+          <SubTitle> Weight </SubTitle>
           <Scale></Scale>
         </VisualDiv>
 
@@ -83,6 +89,12 @@ const Electrolyser = () => {
             voltage={24}
             logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
           />
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
+          <SubTitle>Total Production/Usage</SubTitle>
+          <LineChart name="Gas Production"></LineChart>
         </VisualDiv>
       </Row>
     </Container>

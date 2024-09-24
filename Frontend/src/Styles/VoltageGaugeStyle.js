@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 const Img = styled.img`
   width: 300px;
+  padding: 0 40px;
 `;
 
 const Container = styled.div`

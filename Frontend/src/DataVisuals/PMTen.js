@@ -1,21 +1,23 @@
-// src/DecibelGauge.js
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const DBGauge = ({ decibel, numLabels = 5 }) => {
+const PMTen = ({ value, numLabels = 5 }) => {
   const ref = useRef();
-  const minDb = 0;
-  const maxDb = 100;
+  const minVal = 0;
+  const maxVal = 100;
 
   useEffect(() => {
-    const svg = d3.select(ref.current).attr("width", 500).attr("height", 400);
+    const svg = d3
+      .select(ref.current)
+      .attr("width", window.innerWidth * 0.25)
+      .attr("height", window.innerHeight * 0.1);
 
     svg.selectAll("*").remove(); // Clear previous content
 
-    const width = 500;
-    const height = 500;
-    const innerRadius = 180;
-    const outerRadius = Math.min(width, height) / 2 - 40;
+    const width = window.innerWidth * 0.25;
+    const height = window.innerHeight * 0.09;
+    const innerRadius = 75;
+    const outerRadius = Math.min(width - 125, height) / 2;
     const labelRadius = outerRadius + 20;
 
     // Define the gradient
@@ -34,9 +36,9 @@ const DBGauge = ({ decibel, numLabels = 5 }) => {
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
 
     // Decibel scale mapping to angles
-    const decibelScale = d3
+    const pmScale = d3
       .scaleLinear()
-      .domain([minDb, maxDb])
+      .domain([minVal, maxVal])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -50,13 +52,13 @@ const DBGauge = ({ decibel, numLabels = 5 }) => {
     svg
       .append("path")
       .attr("d", arc)
-      .attr("transform", `translate(${width / 2},${height / 2})`)
+      .attr("transform", `translate(${width / 2},${height / 1.5})`)
       .style("fill", "url(#db-gradient)");
 
     // Needle
-    const needleAngle = decibelScale(decibel);
-    const needleLength = innerRadius - 15;
-    const needleWidth = 40;
+    const needleAngle = pmScale(value);
+    const needleLength = innerRadius - 25;
+    const needleWidth = 15;
     const needleHeadLength = 10;
     const needleData = [
       { x: 0, y: -needleLength }, // Tip of the needle
@@ -78,7 +80,7 @@ const DBGauge = ({ decibel, numLabels = 5 }) => {
       .attr("d", lineGenerator)
       .attr(
         "transform",
-        `translate(${width / 2},${height / 2}) rotate(${(needleAngle * 180) / Math.PI})`,
+        `translate(${width / 2},${height / 1.5}) rotate(${(needleAngle * 180) / Math.PI})`,
       )
       .style("fill", "#000");
 
@@ -86,13 +88,30 @@ const DBGauge = ({ decibel, numLabels = 5 }) => {
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minDb, maxDb]);
+      .range([minVal, maxVal]);
 
     for (let i = 0; i < numLabels; i++) {
-      const db = labelScale(i);
-      const angle = decibelScale(db);
+      const pm = labelScale(i);
+      const angle = pmScale(pm);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
-      const yLabel = height / 2 + labelRadius * Math.sin(angle - Math.PI / 2);
+      const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
+
+      // Draw line from label to outer arc
+      const lineLength = 0; // Adjust this value to control line length
+
+      const xArc =
+        width / 2 + (outerRadius - lineLength) * Math.cos(angle - Math.PI / 2);
+      const yArc =
+        height / 1.5 +
+        (outerRadius - lineLength) * Math.sin(angle - Math.PI / 2);
+
+      svg
+        .append("line")
+        .attr("x1", xLabel)
+        .attr("y1", yLabel)
+        .attr("x2", xArc)
+        .attr("y2", yArc)
+        .style("stroke", "#ffffff");
 
       // Label text
       svg
@@ -100,24 +119,23 @@ const DBGauge = ({ decibel, numLabels = 5 }) => {
         .attr("x", xLabel)
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
-        .attr("dy", "0.90em")
-        .text(`${Math.round(db)}`)
+        .attr("dy", "0.35em")
+        .text(`${Math.round(pm)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
-    // Decibel text
     svg
       .append("text")
       .attr("text-anchor", "middle")
-      .attr("dy", "1em")
-      .attr("transform", `translate(${width / 2},${height / 2 + 30})`)
-      .text(`${decibel} dB`)
-      .style("font-size", "3rem")
+      .attr("dy", "1.7em")
+      .attr("transform", `translate(${width / 2},${height / 1.4})`)
+      .text(`${value}`)
+      .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [decibel, minDb, maxDb, numLabels]);
+  }, [value, minVal, maxVal, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default DBGauge;
+export default PMTen;

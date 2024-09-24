@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-const H2LineChart = () => {
+const HydrogenLineChart = () => {
   const width = window.innerWidth * 0.82;
   const height = window.innerHeight * 0.25;
   const marginTop = 40;
@@ -170,4 +170,4 @@ const H2LineChart = () => {
   );
 };
 
-export default H2LineChart;
+export default HydrogenLineChart;

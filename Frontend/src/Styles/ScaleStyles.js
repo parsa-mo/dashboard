@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 const Img = styled.img`
   width: 300px;
   border-radius: 10px;
+  padding: 0 40px;
 `;
 
 const Label = styled.span`
@@ -18,8 +19,9 @@ const Text = styled.span`
   position: absolute;
   font-size: 8rem;
   color: #28313e;
-  top: 45%;
-  left: 30%;
+  top: 70%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjusts to ensure centering */
 `;
 
 const Container = styled.div`

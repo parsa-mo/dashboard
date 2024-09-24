@@ -33,7 +33,13 @@ const Chamber = () => {
         </VisualDiv>
       </Row>
       <Row>
-        <VisualDiv style={{ backgroundColor: "white", position: "relative" }}>
+        <VisualDiv
+          style={{
+            backgroundColor: "white",
+            position: "relative",
+            width: "80vw",
+          }}
+        >
           <img src={chambers} alt="chambers" style={{ width: "90vw" }} />
 
           <Valve1 />

@@ -2,7 +2,7 @@ import React from "react";
 import {
   TemperatureGauge,
   VoltageGauge,
-  H2LineChart,
+  HydrogenLineChart,
 } from "../DataVisuals/DataVisuals";
 import {
   Container,
@@ -39,7 +39,7 @@ const FuelCell = () => {
       <Row>
         <VisualDiv>
           <SubTitle>Hydrogen Input Rate</SubTitle>
-          <H2LineChart />
+          <HydrogenLineChart />
         </VisualDiv>
       </Row>
     </Container>

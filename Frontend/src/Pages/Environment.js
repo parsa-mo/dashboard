@@ -9,8 +9,9 @@ import {
 import {
   TemperatureGauge,
   AreaChart,
-  BarChart,
-  DBGauge,
+  PMOne,
+  PMTen,
+  PMTwoFive,
 } from "../DataVisuals/DataVisuals";
 
 const Environment = () => {
@@ -23,6 +24,27 @@ const Environment = () => {
       </Row>
       <Row>
         <VisualDiv>
+          <SubTitle>Particle Matter</SubTitle>
+          <VisualDiv
+            style={{ flexDirection: "row", backgroundColor: "transparent" }}
+          >
+            <VisualDiv>
+              <SubTitle>PM1.0</SubTitle>
+              <PMOne value={5}></PMOne>
+            </VisualDiv>
+            <VisualDiv>
+              <SubTitle>PM10.0</SubTitle>
+              <PMTen value={50}></PMTen>
+            </VisualDiv>
+            <VisualDiv>
+              <SubTitle>PM2.5</SubTitle>
+              <PMTwoFive value={20}></PMTwoFive>
+            </VisualDiv>
+          </VisualDiv>
+        </VisualDiv>
+      </Row>
+      <Row>
+        <VisualDiv>
           <SubTitle>Temperature</SubTitle>
           <TemperatureGauge
             name="Temperature"
@@ -30,23 +52,10 @@ const Environment = () => {
             temperature={70}
           ></TemperatureGauge>
         </VisualDiv>
-        <VisualDiv>
-          <SubTitle>Noise</SubTitle>
-          <DBGauge decibel={50}></DBGauge>
-        </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
-          <SubTitle>Gas Flow</SubTitle>
-          <BarChart
-            data={[
-              { Name: "Oxygen", FlowRate: 5 },
-              { Name: "CO2", FlowRate: 2 },
-            ]}
-          ></BarChart>
-        </VisualDiv>
-        <VisualDiv>
-          <SubTitle>Humidity</SubTitle>
+          <SubTitle>Moisture</SubTitle>
           <AreaChart></AreaChart>
         </VisualDiv>
       </Row>
