@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   TemperatureGauge,
   LiquidGauge,
   VoltageGauge,
   BarChart,
-  AreaChart,
-  LineChart,
+  Humidity,
+  TotalProductionChart,
   Scale,
   WaterDash,
   DecibelGauge,
@@ -19,8 +19,18 @@ import {
   SubTitle,
 } from "../Styles/Universal";
 import { Voltmeter, Ampmeter } from "../Images/Images";
+import { DataContext } from "./Home";
 
 const Electrolyser = () => {
+  const data = useContext(DataContext);
+  const waterTemp = data?.data?.["WaterTemp"] ?? 0;
+  const sound = data?.data?.["sound"] ?? 0;
+  const weight = data?.data?.["weight"] ?? 0;
+  const pH = data?.data?.["pH"] ?? 0;
+  const pressure = data?.data?.["pressure"] ?? 0;
+  const sharpIRRaw = data?.data?.["sharpIR"] ?? 0;
+  const sharpIR = (1 - sharpIRRaw / 300) * 100;
+
   return (
     <Container>
       <Row>
@@ -34,15 +44,15 @@ const Electrolyser = () => {
           <SubTitle>Internal Temperature</SubTitle>
           <TemperatureGauge
             name="InternalTemperature"
-            temperature={750}
-            optimalTemp={800}
+            temperature={0}
+            optimalTemp={50}
           />
         </VisualDiv>
         <VisualDiv>
           <SubTitle> Water Temperature</SubTitle>
           <TemperatureGauge
             name="WaterTemperature"
-            temperature={100}
+            temperature={waterTemp}
             optimalTemp={50}
           />
         </VisualDiv>
@@ -53,14 +63,14 @@ const Electrolyser = () => {
           <SubTitle>Noise </SubTitle>
           <VisualDiv style={{ flexDirection: "row" }}>
             <NoiseLineChart></NoiseLineChart>
-            <DecibelGauge decibel={50}></DecibelGauge>{" "}
+            <DecibelGauge decibel={sound}></DecibelGauge>{" "}
           </VisualDiv>{" "}
         </VisualDiv>
       </Row>
       <Row>
         <VisualDiv>
           <SubTitle>Humidity </SubTitle>
-          <AreaChart name="Humidity"></AreaChart>
+          <Humidity name="Humidity"></Humidity>
         </VisualDiv>
         <VisualDiv>
           <SubTitle>Rate of Production</SubTitle>
@@ -71,14 +81,14 @@ const Electrolyser = () => {
       <Row>
         <VisualDiv>
           <SubTitle> Weight </SubTitle>
-          <Scale></Scale>
+          <Scale Weight={weight}></Scale>
         </VisualDiv>
 
         <VisualDiv>
           <SubTitle> Water Level</SubTitle>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <LiquidGauge WaterLevel={50} WaterPH={9} />
-            <WaterDash></WaterDash>
+            <LiquidGauge WaterLevel={sharpIR} WaterPH={pH} />
+            <WaterDash PH={pH} Pressure={pressure}></WaterDash>
           </div>
         </VisualDiv>
       </Row>
@@ -94,7 +104,7 @@ const Electrolyser = () => {
       <Row>
         <VisualDiv>
           <SubTitle>Total Production/Usage</SubTitle>
-          <LineChart name="Gas Production"></LineChart>
+          <TotalProductionChart name="Gas Production"></TotalProductionChart>
         </VisualDiv>
       </Row>
     </Container>

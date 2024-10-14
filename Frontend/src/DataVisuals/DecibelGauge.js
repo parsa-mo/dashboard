@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const DecibelGauge = ({ decibel, numLabels = 5 }) => {
+const DecibelGauge = ({ decibel = 0, numLabels = 5 }) => {
   const ref = useRef();
   const minDb = 0;
   const maxDb = 100;

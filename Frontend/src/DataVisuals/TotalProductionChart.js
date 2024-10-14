@@ -1,58 +1,74 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import { DataContext } from "../Pages/Home"; // Import context from Home
 
-const LineChart = () => {
+const TotalProductionChart = () => {
+  const svgRef = useRef();
   const width = window.innerWidth * 0.82;
   const height = window.innerHeight * 0.25;
   const marginTop = 40;
   const marginRight = 100;
   const marginLeft = 130;
   const marginBottom = 80;
-  const svgRef = useRef();
 
-  const [data, setData] = useState([
-    { time: 0, oxygen: 100, hydrogen: 100, water: 0 },
-  ]);
-  const [seconds, setSeconds] = useState(0);
+  // Get real data from DataContext
+  const data = useContext(DataContext);
+  const oxygen = data?.data?.["oxygen"] ?? 0;
+  const hydrogen = data?.data?.["h2"] ?? 0;
 
+  // State to hold the production data with timestamps
+  const [productionData, setProductionData] = useState([]);
+
+  // State to track time increments
+  const [time, setTime] = useState(0);
+
+  // Append new data points as they come in
   useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds + 1);
-      setData((prevData) => {
-        const lastEntry = prevData[prevData.length - 1];
-        return [
-          ...prevData,
-          {
-            time: lastEntry.time + 1,
-            oxygen: lastEntry.oxygen - Math.floor(Math.random() * 5),
-            hydrogen: lastEntry.hydrogen - Math.floor(Math.random() * 5),
-            water: lastEntry.water + Math.floor(Math.random() * 5),
-          },
-        ];
-      });
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [data, seconds]);
+    if (oxygen === undefined || hydrogen === undefined) return;
 
+    // Append new data point when new data comes in
+    setProductionData((prevData) => [
+      ...prevData,
+      {
+        time,
+        oxygen,
+        hydrogen,
+        water: 0, // Use steam as the water value
+      },
+    ]);
+
+    // Increment time for the next data point
+    setTime((prevTime) => prevTime + 1);
+  }, [oxygen, hydrogen]);
+
+  // Effect to draw the chart whenever productionData changes
   useEffect(() => {
-    if (!svgRef.current) return;
+    if (!svgRef.current || productionData.length === 0) return;
 
     const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
+    svg.selectAll("*").remove(); // Clear previous content
 
+    // Set up the X and Y scales
     const x = d3
       .scaleLinear()
-      .domain(d3.extent(data, (d) => d.time))
+      .domain(d3.extent(productionData, (d) => d.time)) // X-axis based on time
       .range([marginLeft, width - marginRight]);
 
     const y = d3
       .scaleLinear()
       .domain([
-        d3.min(data, (d) => Math.min(d.water, d.oxygen, d.hydrogen) - 20),
-        d3.max(data, (d) => Math.max(d.oxygen, d.hydrogen, d.water) + 20),
+        d3.min(
+          productionData,
+          (d) => Math.min(d.water, d.oxygen, d.hydrogen) - 20,
+        ),
+        d3.max(
+          productionData,
+          (d) => Math.max(d.oxygen, d.hydrogen, d.water) + 20,
+        ),
       ])
       .range([height - marginBottom, marginTop]);
 
+    // Line generators for oxygen, hydrogen, and water
     const oxygenLine = d3
       .line()
       .x((d) => x(d.time))
@@ -68,30 +84,34 @@ const LineChart = () => {
       .x((d) => x(d.time))
       .y((d) => y(d.water));
 
+    // Append the oxygen line
     svg
       .append("path")
-      .datum(data)
+      .datum(productionData)
       .attr("fill", "none")
       .attr("stroke", "green")
       .attr("stroke-width", "3px")
       .attr("d", oxygenLine);
 
+    // Append the hydrogen line
     svg
       .append("path")
-      .datum(data)
+      .datum(productionData)
       .attr("fill", "none")
       .attr("stroke", "red")
       .attr("stroke-width", "3px")
       .attr("d", hydrogenLine);
 
+    // Append the water line
     svg
       .append("path")
-      .datum(data)
+      .datum(productionData)
       .attr("fill", "none")
       .attr("stroke", "steelblue")
       .attr("stroke-width", "3px")
       .attr("d", waterLine);
 
+    // Add the X-axis
     svg
       .append("g")
       .attr("transform", `translate(0,${height - marginBottom})`)
@@ -108,6 +128,7 @@ const LineChart = () => {
       .style("font-weight", "bold")
       .style("fill", "white");
 
+    // Set X-axis style
     svg
       .select(".xAxis")
       .selectAll("path")
@@ -119,15 +140,17 @@ const LineChart = () => {
       .style("stroke-width", "3px")
       .style("stroke", "white");
 
+    // X-axis label
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", 455)
+      .attr("y", height - 10)
       .attr("fill", "white")
       .attr("text-anchor", "middle")
       .text("Seconds")
       .style("font-size", "1.5em");
 
+    // Add the Y-axis
     svg
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
@@ -146,6 +169,7 @@ const LineChart = () => {
       .style("font-weight", "bold")
       .style("fill", "white");
 
+    // Y-axis label
     svg
       .select(".yAxis")
       .append("text")
@@ -158,6 +182,7 @@ const LineChart = () => {
       .style("font-size", "2em")
       .style("fill", "white");
 
+    // Set Y-axis style
     svg
       .select(".yAxis")
       .selectAll("path")
@@ -169,6 +194,7 @@ const LineChart = () => {
       .style("stroke-width", "3px")
       .style("stroke", "white");
 
+    // Create a legend for oxygen, hydrogen, and water
     const legend = svg
       .append("g")
       .attr(
@@ -176,6 +202,7 @@ const LineChart = () => {
         `translate(${width - marginRight - 120}, ${marginTop})`,
       );
 
+    // Oxygen legend
     legend
       .append("rect")
       .attr("x", 125)
@@ -192,6 +219,7 @@ const LineChart = () => {
       .text("O2")
       .style("font-size", "1.25em");
 
+    // Hydrogen legend
     legend
       .append("rect")
       .attr("x", 125)
@@ -208,6 +236,7 @@ const LineChart = () => {
       .text("H")
       .style("font-size", "1.25em");
 
+    // Water legend
     legend
       .append("rect")
       .attr("x", 125)
@@ -223,7 +252,7 @@ const LineChart = () => {
       .attr("fill", "white")
       .text("H2O")
       .style("font-size", "1.25em");
-  }, [data]);
+  }, [productionData]); // Redraw the chart whenever the productionData changes
 
   return (
     <div>
@@ -232,4 +261,4 @@ const LineChart = () => {
   );
 };
 
-export default LineChart;
+export default TotalProductionChart;

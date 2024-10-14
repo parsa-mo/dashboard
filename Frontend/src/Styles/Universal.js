@@ -59,4 +59,20 @@ const Divider = styled.hr`
   border-radius: 40px;
 `;
 
-export { Main, Container, VisualDiv, Title, Row, SubTitle, Divider };
+const Circle = ({ status }) => {
+  const CircleWrapper = styled.div`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid darkgray; /* Darker grey border */
+    background-color: ${status === 1 ? "green" : "red"}; /* Dynamic color */
+    //position: absolute;
+    //right: 20px; /* Positioning the circle on the right */
+    //top: 50%;
+    //transform: translateY(-50%);
+  `;
+
+  return <CircleWrapper />;
+};
+
+export { Main, Container, VisualDiv, Title, Row, SubTitle, Divider, Circle };

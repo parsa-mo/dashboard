@@ -1,15 +1,11 @@
-// src/TemperatureGauge.js
 import React, { useContext, useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { DataContext } from "../Pages/Home";
 
-const TemperatureGauge = ({
-  temperature = 0,
-  optimalTemp = 90,
-  numLabels = 7,
-}) => {
+const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
   const ref = useRef();
-  const minTemp = -optimalTemp;
-  const maxTemp = optimalTemp * 3;
+  const min = -optimalRange;
+  const max = optimalRange * 3;
 
   useEffect(() => {
     const svg = d3
@@ -29,14 +25,13 @@ const TemperatureGauge = ({
     const defs = svg.append("defs");
     const gradient = defs
       .append("linearGradient")
-      .attr("id", "temp-gradient")
+      .attr("id", "gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    const optimalPercent =
-      ((optimalTemp - minTemp) / (maxTemp - minTemp)) * 100;
+    const optimalPercent = ((optimalRange - min) / (max - min)) * 100;
 
     gradient.append("stop").attr("offset", "0%").attr("stop-color", "red");
     gradient
@@ -60,10 +55,10 @@ const TemperatureGauge = ({
 
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
 
-    // Temperature scale mapping to angles
-    const temperatureScale = d3
+    // scale mapping to angles
+    const Scale = d3
       .scaleLinear()
-      .domain([minTemp, maxTemp])
+      .domain([min, max])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -78,10 +73,10 @@ const TemperatureGauge = ({
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#temp-gradient)");
+      .style("fill", "url(#gradient)");
 
     // Needle
-    const needleAngle = temperatureScale(temperature);
+    const needleAngle = Scale(value);
     const needleLength = innerRadius - 35;
     const needleWidth = 40;
     const needleHeadLength = 10; // Length of the rounded head
@@ -109,15 +104,15 @@ const TemperatureGauge = ({
       )
       .style("fill", "#000");
 
-    // Temperature labels and lines
+    // labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minTemp, maxTemp]);
+      .range([min, max]);
 
     for (let i = 0; i < numLabels; i++) {
-      const temp = labelScale(i);
-      const angle = temperatureScale(temp);
+      const val = labelScale(i);
+      const angle = Scale(val);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
@@ -145,7 +140,7 @@ const TemperatureGauge = ({
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(temp)}°`)
+        .text(`${Math.round(val)}°`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
@@ -156,12 +151,12 @@ const TemperatureGauge = ({
       .attr("text-anchor", "middle")
       .attr("dy", "1em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${temperature}°C`)
+      .text(`${value}°C`)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [temperature, minTemp, maxTemp, optimalTemp, numLabels]);
+  }, [value, min, max, optimalRange, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default TemperatureGauge;
+export default HallEffect;

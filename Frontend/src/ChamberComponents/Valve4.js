@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import valve from "../Images/valve.png";
 
-const Valve3 = () => {
+const Valve3 = ({ state }) => {
   const [isRotated, setIsRotated] = useState(false); // Track whether the image is rotated
-
-  const handleClick = () => {
-    setIsRotated(!isRotated); // Toggle rotation state
-  };
+  useEffect(() => {
+    if (state === "Open") {
+      setIsRotated(true);
+    } else setIsRotated(false);
+    // Toggle rotation state
+  }, [state]);
   return (
     <img
       name="valve4"
@@ -22,7 +24,6 @@ const Valve3 = () => {
         cursor: "pointer",
         transition: "transform 0.3s ease", // Smooth transition between rotations
       }}
-      onClick={handleClick}
     />
   );
 };
