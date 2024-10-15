@@ -3,13 +3,11 @@ import {
   TemperatureGauge,
   LiquidGauge,
   VoltageGauge,
-  BarChart,
-  Humidity,
-  TotalProductionChart,
   Scale,
   WaterDash,
   DecibelGauge,
-  NoiseLineChart,
+  VibrationGauge,
+  ElecOxygenGauge,
 } from "../DataVisuals/DataVisuals";
 import {
   Container,
@@ -23,6 +21,7 @@ import { DataContext } from "./Home";
 
 const Electrolyser = () => {
   const data = useContext(DataContext);
+  const internalTemp = data?.data?.["IntTemperature"] ?? 0;
   const waterTemp = data?.data?.["WaterTemp"] ?? 0;
   const sound = data?.data?.["sound"] ?? 0;
   const weight = data?.data?.["weight"] ?? 0;
@@ -30,6 +29,8 @@ const Electrolyser = () => {
   const pressure = data?.data?.["pressure"] ?? 0;
   const sharpIRRaw = data?.data?.["sharpIR"] ?? 0;
   const sharpIR = (1 - sharpIRRaw / 300) * 100;
+  const vibration = data?.data?.["vibration"] ?? 0;
+  const elecOxygen = data?.data?.["ElecOxygen"] ?? 0;
 
   return (
     <Container>
@@ -44,7 +45,7 @@ const Electrolyser = () => {
           <SubTitle>Internal Temperature</SubTitle>
           <TemperatureGauge
             name="InternalTemperature"
-            temperature={0}
+            temperature={internalTemp}
             optimalTemp={50}
           />
         </VisualDiv>
@@ -60,24 +61,28 @@ const Electrolyser = () => {
 
       <Row>
         <VisualDiv>
-          <SubTitle>Noise </SubTitle>
-          <VisualDiv style={{ flexDirection: "row" }}>
-            <NoiseLineChart></NoiseLineChart>
-            <DecibelGauge decibel={sound}></DecibelGauge>{" "}
-          </VisualDiv>{" "}
+          <VisualDiv
+            style={{
+              flexDirection: "row",
+              backgroundColor: "transparent",
+              paddingTop: "40px",
+            }}
+          >
+            <VisualDiv>
+              <SubTitle>Noise </SubTitle>
+              <DecibelGauge decibel={sound}></DecibelGauge>{" "}
+            </VisualDiv>
+            <VisualDiv>
+              <SubTitle>Vibration </SubTitle>
+              <VibrationGauge vibration={vibration}></VibrationGauge>
+            </VisualDiv>
+            <VisualDiv>
+              <SubTitle>Oxygen</SubTitle>
+              <ElecOxygenGauge elecOxygen={elecOxygen}></ElecOxygenGauge>
+            </VisualDiv>
+          </VisualDiv>
         </VisualDiv>
       </Row>
-      <Row>
-        <VisualDiv>
-          <SubTitle>Humidity </SubTitle>
-          <Humidity name="Humidity"></Humidity>
-        </VisualDiv>
-        <VisualDiv>
-          <SubTitle>Rate of Production</SubTitle>
-          <BarChart name="GasFlow"></BarChart>
-        </VisualDiv>
-      </Row>
-
       <Row>
         <VisualDiv>
           <SubTitle> Weight </SubTitle>
@@ -96,17 +101,17 @@ const Electrolyser = () => {
         <VisualDiv>
           <SubTitle>Power</SubTitle>
           <VoltageGauge
-            voltage={24}
+            data={{ voltage: 0, amps: 0 }}
             logo={{ voltmeter: Voltmeter, ampmeter: Ampmeter }}
           />
         </VisualDiv>
       </Row>
-      <Row>
-        <VisualDiv>
-          <SubTitle>Total Production/Usage</SubTitle>
-          <TotalProductionChart name="Gas Production"></TotalProductionChart>
-        </VisualDiv>
-      </Row>
+      {/*<Row>*/}
+      {/*  <VisualDiv>*/}
+      {/*    <SubTitle>Total Production/Usage</SubTitle>*/}
+      {/*    <TotalProductionChart name="Gas Production"></TotalProductionChart>*/}
+      {/*  </VisualDiv>*/}
+      {/*</Row>*/}
     </Container>
   );
 };

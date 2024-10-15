@@ -10,7 +10,7 @@
 "Tap9": "Open",
 "Tap10": "Open",
 "Tap11": "Open",
-"hallEffect": 534,
+"hallEffect": 634,
 "sound": 28,
 "irProximity":1,
 "sharpIR": 155,
@@ -27,6 +27,7 @@
 "pH": 6.12,
 "pressure": 9.87,
 "steam": 20,
+"IntTemperature": 30,
 "temperature": 19.9,
 "vibration": 303.0,
 "weight": 0

@@ -11,6 +11,10 @@ import AmpmeterSolar from "./AmpmeterSolar.png";
 import AmpmeterAC from "./AmpmeterAC.png";
 import HomeIcon from "./HomeIcon.png";
 import scale from "./scale.jpg";
+import Icon1 from "./Icon1.png";
+import Icon2 from "./Icon2.png";
+import Icon3 from "./Icon3.png";
+import Icon4 from "./Icon4.png";
 
 export {
   Logo,
@@ -26,4 +30,8 @@ export {
   Ampmeter,
   HomeIcon,
   scale,
+  Icon1,
+  Icon2,
+  Icon3,
+  Icon4,
 };

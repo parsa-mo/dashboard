@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef } from "react";
+// src/HumidityGauge.js
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { DataContext } from "../Pages/Home";
 
-const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
+const HumidityGauge = ({ humidity = 0, numLabels = 5 }) => {
   const ref = useRef();
-  const min = -optimalRange;
-  const max = optimalRange * 3;
+  const minHumidity = 0;
+  const maxHumidity = 100;
 
   useEffect(() => {
     const svg = d3
@@ -21,47 +21,13 @@ const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
     const outerRadius = Math.min(width, height) / 2 - 20;
     const labelRadius = outerRadius + 40;
 
-    // Define the gradient
-    const defs = svg.append("defs");
-    const gradient = defs
-      .append("linearGradient")
-      .attr("id", "gradient")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "100%")
-      .attr("y2", "0%");
-
-    const optimalPercent = ((optimalRange - min) / (max - min)) * 100;
-
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "red");
-    gradient
-      .append("stop")
-      .attr("offset", `${optimalPercent - 25}%`)
-      .attr("stop-color", "yellow");
-    gradient
-      .append("stop")
-      .attr("offset", `${optimalPercent}%`)
-      .attr("stop-color", "green");
-
-    gradient
-      .append("stop")
-      .attr("offset", `${optimalPercent}%`)
-      .attr("stop-color", "green");
-
-    gradient
-      .append("stop")
-      .attr("offset", `${optimalPercent + 25}%`)
-      .attr("stop-color", "yellow");
-
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
-
-    // scale mapping to angles
-    const Scale = d3
+    // Humidity scale mapping to angles
+    const humidityScale = d3
       .scaleLinear()
-      .domain([min, max])
+      .domain([minHumidity, maxHumidity])
       .range([-Math.PI / 2, Math.PI / 2]);
 
-    // Background arc
+    // Background arc (blue for humidity)
     const arc = d3
       .arc()
       .innerRadius(innerRadius)
@@ -73,13 +39,13 @@ const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#gradient)");
+      .style("fill", "deepskyblue"); // Blue to represent humidity
 
     // Needle
-    const needleAngle = Scale(value);
+    const needleAngle = humidityScale(humidity);
     const needleLength = innerRadius - 35;
     const needleWidth = 40;
-    const needleHeadLength = 10; // Length of the rounded head
+    const needleHeadLength = 10;
     const needleData = [
       { x: 0, y: -needleLength }, // Tip of the needle
       { x: -needleWidth / 2, y: -needleHeadLength }, // Top left of the head
@@ -92,7 +58,7 @@ const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
       .line()
       .x((d) => d.x)
       .y((d) => d.y)
-      .curve(d3.curveNatural); // Use a natural curve for smooth edges
+      .curve(d3.curveNatural);
 
     svg
       .append("path")
@@ -104,15 +70,15 @@ const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
       )
       .style("fill", "#000");
 
-    // labels and lines
+    // Humidity labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([min, max]);
+      .range([minHumidity, maxHumidity]);
 
     for (let i = 0; i < numLabels; i++) {
-      const val = labelScale(i);
-      const angle = Scale(val);
+      const humidityValue = labelScale(i);
+      const angle = humidityScale(humidityValue);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
@@ -140,23 +106,23 @@ const HallEffect = ({ value = 0, optimalRange = 600, numLabels = 7 }) => {
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(val)}°`)
+        .text(`${Math.round(humidityValue)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
-    // Temperature text
+    // Humidity text
     svg
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "1em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${value}°C`)
+      .text(`${humidity}% `)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [value, min, max, optimalRange, numLabels]);
+  }, [humidity, minHumidity, maxHumidity, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default HallEffect;
+export default HumidityGauge;

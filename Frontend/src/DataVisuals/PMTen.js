@@ -1,14 +1,10 @@
 import React, { useContext, useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { DataContext } from "../Pages/Home";
 
-const PMTen = ({ value, numLabels = 5 }) => {
+const PMTen = ({ value = 0, numLabels = 5 }) => {
   const ref = useRef();
   const minVal = 0;
   const maxVal = 100;
-
-  const data = useContext(DataContext);
-  value = data?.data?.["PM10.0"] ?? 0;
 
   useEffect(() => {
     const svg = d3

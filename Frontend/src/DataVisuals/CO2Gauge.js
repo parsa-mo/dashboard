@@ -1,44 +1,60 @@
-import React, { useContext, useEffect, useRef } from "react";
+// src/CO2Gauge.js
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const PMOne = ({ value = 0, numLabels = 5 }) => {
+const CO2Gauge = ({ co2 = 0, optimalCO2 = 1000, numLabels = 7 }) => {
   const ref = useRef();
-  const minVal = 0;
-  const maxVal = 100;
+  const minCO2 = 0;
+  const maxCO2 = optimalCO2 * 3;
 
   useEffect(() => {
     const svg = d3
       .select(ref.current)
-      .attr("width", window.innerWidth * 0.25)
-      .attr("height", window.innerHeight * 0.1);
+      .attr("width", window.innerWidth * 0.45)
+      .attr("height", window.innerHeight * 0.175);
 
     svg.selectAll("*").remove(); // Clear previous content
 
-    const width = window.innerWidth * 0.25;
-    const height = window.innerHeight * 0.09;
-    const innerRadius = 75;
-    const outerRadius = Math.min(width - 125, height) / 2;
-    const labelRadius = outerRadius + 20;
+    const width = window.innerWidth * 0.45;
+    const height = window.innerHeight * 0.2;
+    const innerRadius = 180;
+    const outerRadius = Math.min(width, height) / 2 - 20;
+    const labelRadius = outerRadius + 40;
 
-    // Define the gradient
+    // Define the gradient for CO2
     const defs = svg.append("defs");
     const gradient = defs
       .append("linearGradient")
-      .attr("id", "db-gradient")
+      .attr("id", "co2-gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "green");
-    gradient.append("stop").attr("offset", "30%").attr("stop-color", "yellow");
-    gradient.append("stop").attr("offset", "70%").attr("stop-color", "orange");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
+    const optimalPercent = ((optimalCO2 - minCO2) / (maxCO2 - minCO2)) * 100;
 
-    // Decibel scale mapping to angles
-    const pmScale = d3
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "green");
+    gradient
+      .append("stop")
+      .attr("offset", `${optimalPercent - 5}%`)
+      .attr("stop-color", "yellow");
+    gradient
+      .append("stop")
+      .attr("offset", `${optimalPercent + 10}%`)
+      .attr("stop-color", "orange");
+    gradient
+      .append("stop")
+      .attr("offset", `${optimalPercent + 50}%`)
+      .attr("stop-color", "red");
+    gradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "darkred");
+
+    // CO2 scale mapping to angles
+    const co2Scale = d3
       .scaleLinear()
-      .domain([minVal, maxVal])
+      .domain([minCO2, maxCO2])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -53,12 +69,12 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#db-gradient)");
+      .style("fill", "url(#co2-gradient)");
 
     // Needle
-    const needleAngle = pmScale(value);
-    const needleLength = innerRadius - 25;
-    const needleWidth = 15;
+    const needleAngle = co2Scale(co2);
+    const needleLength = innerRadius - 35;
+    const needleWidth = 40;
     const needleHeadLength = 10;
     const needleData = [
       { x: 0, y: -needleLength }, // Tip of the needle
@@ -84,20 +100,20 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       )
       .style("fill", "#000");
 
-    // Decibel labels and lines
+    // CO2 labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minVal, maxVal]);
+      .range([minCO2, maxCO2]);
 
     for (let i = 0; i < numLabels; i++) {
-      const pm = labelScale(i);
-      const angle = pmScale(pm);
+      const co2Value = labelScale(i);
+      const angle = co2Scale(co2Value);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
       // Draw line from label to outer arc
-      const lineLength = 0; // Adjust this value to control line length
+      const lineLength = 0;
 
       const xArc =
         width / 2 + (outerRadius - lineLength) * Math.cos(angle - Math.PI / 2);
@@ -120,22 +136,23 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(pm)}`)
+        .text(`${Math.round(co2Value)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
+    // CO2 text
     svg
       .append("text")
       .attr("text-anchor", "middle")
-      .attr("dy", "1.7em")
+      .attr("dy", "1em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${value}`)
+      .text(`${co2} ppm`)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [value, minVal, maxVal, numLabels]);
+  }, [co2, minCO2, maxCO2, optimalCO2, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default PMOne;
+export default CO2Gauge;

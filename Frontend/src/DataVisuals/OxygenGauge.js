@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef } from "react";
+// src/OxygenGauge.js
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const PMOne = ({ value = 0, numLabels = 5 }) => {
+const OxygenGauge = ({ oxygen = 0, numLabels = 5 }) => {
   const ref = useRef();
-  const minVal = 0;
-  const maxVal = 100;
+  const minOxygen = 0;
+  const maxOxygen = 100;
 
   useEffect(() => {
     const svg = d3
@@ -24,21 +25,29 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
     const defs = svg.append("defs");
     const gradient = defs
       .append("linearGradient")
-      .attr("id", "db-gradient")
+      .attr("id", "oxygen-gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "green");
-    gradient.append("stop").attr("offset", "30%").attr("stop-color", "yellow");
-    gradient.append("stop").attr("offset", "70%").attr("stop-color", "orange");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
+    gradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "lightgreen");
+    gradient
+      .append("stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "aquamarine");
+    gradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "skyblue");
 
-    // Decibel scale mapping to angles
-    const pmScale = d3
+    // Oxygen scale mapping to angles
+    const oxygenScale = d3
       .scaleLinear()
-      .domain([minVal, maxVal])
+      .domain([minOxygen, maxOxygen])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -53,10 +62,10 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#db-gradient)");
+      .style("fill", "url(#oxygen-gradient)");
 
     // Needle
-    const needleAngle = pmScale(value);
+    const needleAngle = oxygenScale(oxygen);
     const needleLength = innerRadius - 25;
     const needleWidth = 15;
     const needleHeadLength = 10;
@@ -84,15 +93,15 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       )
       .style("fill", "#000");
 
-    // Decibel labels and lines
+    // Oxygen labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minVal, maxVal]);
+      .range([minOxygen, maxOxygen]);
 
     for (let i = 0; i < numLabels; i++) {
-      const pm = labelScale(i);
-      const angle = pmScale(pm);
+      const oxygenValue = labelScale(i);
+      const angle = oxygenScale(oxygenValue);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
@@ -120,22 +129,23 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(pm)}`)
+        .text(`${Math.round(oxygenValue)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
+    // Oxygen text
     svg
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "1.7em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${value}`)
+      .text(`${oxygen}`)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [value, minVal, maxVal, numLabels]);
+  }, [oxygen, minOxygen, maxOxygen, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default PMOne;
+export default OxygenGauge;

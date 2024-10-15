@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef } from "react";
+// src/H2Gauge.js
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const PMOne = ({ value = 0, numLabels = 5 }) => {
+const H2Gauge = ({ h2 = 0, numLabels = 5 }) => {
   const ref = useRef();
-  const minVal = 0;
-  const maxVal = 100;
+  const minH2 = 0;
+  const maxH2 = 100;
 
   useEffect(() => {
     const svg = d3
@@ -24,21 +25,26 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
     const defs = svg.append("defs");
     const gradient = defs
       .append("linearGradient")
-      .attr("id", "db-gradient")
+      .attr("id", "h2-gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "green");
-    gradient.append("stop").attr("offset", "30%").attr("stop-color", "yellow");
-    gradient.append("stop").attr("offset", "70%").attr("stop-color", "orange");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "cyan");
+    gradient
+      .append("stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "lightblue");
+    gradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "deepskyblue");
 
-    // Decibel scale mapping to angles
-    const pmScale = d3
+    // H2 scale mapping to angles
+    const h2Scale = d3
       .scaleLinear()
-      .domain([minVal, maxVal])
+      .domain([minH2, maxH2])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -53,10 +59,10 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#db-gradient)");
+      .style("fill", "url(#h2-gradient)");
 
     // Needle
-    const needleAngle = pmScale(value);
+    const needleAngle = h2Scale(h2);
     const needleLength = innerRadius - 25;
     const needleWidth = 15;
     const needleHeadLength = 10;
@@ -84,15 +90,15 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       )
       .style("fill", "#000");
 
-    // Decibel labels and lines
+    // H2 labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minVal, maxVal]);
+      .range([minH2, maxH2]);
 
     for (let i = 0; i < numLabels; i++) {
-      const pm = labelScale(i);
-      const angle = pmScale(pm);
+      const h2Value = labelScale(i);
+      const angle = h2Scale(h2Value);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
@@ -120,22 +126,23 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(pm)}`)
+        .text(`${Math.round(h2Value)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
+    // H2 text
     svg
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "1.7em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${value}`)
+      .text(`${h2}`)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [value, minVal, maxVal, numLabels]);
+  }, [h2, minH2, maxH2, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default PMOne;
+export default H2Gauge;

@@ -1,44 +1,61 @@
-import React, { useContext, useEffect, useRef } from "react";
+// src/TVOCGauge.js
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const PMOne = ({ value = 0, numLabels = 5 }) => {
+const TVOCGauge = ({ tvoc = 0, optimalTVOC = 100, numLabels = 7 }) => {
   const ref = useRef();
-  const minVal = 0;
-  const maxVal = 100;
+  const minTVOC = 0;
+  const maxTVOC = optimalTVOC * 3;
 
   useEffect(() => {
     const svg = d3
       .select(ref.current)
-      .attr("width", window.innerWidth * 0.25)
-      .attr("height", window.innerHeight * 0.1);
+      .attr("width", window.innerWidth * 0.45)
+      .attr("height", window.innerHeight * 0.175);
 
     svg.selectAll("*").remove(); // Clear previous content
 
-    const width = window.innerWidth * 0.25;
-    const height = window.innerHeight * 0.09;
-    const innerRadius = 75;
-    const outerRadius = Math.min(width - 125, height) / 2;
-    const labelRadius = outerRadius + 20;
+    const width = window.innerWidth * 0.45;
+    const height = window.innerHeight * 0.2;
+    const innerRadius = 180;
+    const outerRadius = Math.min(width, height) / 2 - 20;
+    const labelRadius = outerRadius + 40;
 
-    // Define the gradient
+    // Define the gradient for TVOC
     const defs = svg.append("defs");
     const gradient = defs
       .append("linearGradient")
-      .attr("id", "db-gradient")
+      .attr("id", "tvoc-gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "green");
-    gradient.append("stop").attr("offset", "30%").attr("stop-color", "yellow");
-    gradient.append("stop").attr("offset", "70%").attr("stop-color", "orange");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
+    const optimalPercent =
+      ((optimalTVOC - minTVOC) / (maxTVOC - minTVOC)) * 100;
 
-    // Decibel scale mapping to angles
-    const pmScale = d3
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "green");
+    gradient
+      .append("stop")
+      .attr("offset", `${optimalPercent - 5}%`)
+      .attr("stop-color", "yellow");
+    gradient
+      .append("stop")
+      .attr("offset", `${optimalPercent + 10}%`)
+      .attr("stop-color", "orange");
+    gradient
+      .append("stop")
+      .attr("offset", `${optimalPercent + 50}%`)
+      .attr("stop-color", "red");
+    gradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "darkred");
+
+    // TVOC scale mapping to angles
+    const tvocScale = d3
       .scaleLinear()
-      .domain([minVal, maxVal])
+      .domain([minTVOC, maxTVOC])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -53,12 +70,12 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#db-gradient)");
+      .style("fill", "url(#tvoc-gradient)");
 
     // Needle
-    const needleAngle = pmScale(value);
-    const needleLength = innerRadius - 25;
-    const needleWidth = 15;
+    const needleAngle = tvocScale(tvoc);
+    const needleLength = innerRadius - 35;
+    const needleWidth = 40;
     const needleHeadLength = 10;
     const needleData = [
       { x: 0, y: -needleLength }, // Tip of the needle
@@ -84,20 +101,20 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       )
       .style("fill", "#000");
 
-    // Decibel labels and lines
+    // TVOC labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minVal, maxVal]);
+      .range([minTVOC, maxTVOC]);
 
     for (let i = 0; i < numLabels; i++) {
-      const pm = labelScale(i);
-      const angle = pmScale(pm);
+      const tvocValue = labelScale(i);
+      const angle = tvocScale(tvocValue);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
       // Draw line from label to outer arc
-      const lineLength = 0; // Adjust this value to control line length
+      const lineLength = 0;
 
       const xArc =
         width / 2 + (outerRadius - lineLength) * Math.cos(angle - Math.PI / 2);
@@ -120,22 +137,23 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(pm)}`)
+        .text(`${Math.round(tvocValue)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
+    // TVOC text
     svg
       .append("text")
       .attr("text-anchor", "middle")
-      .attr("dy", "1.7em")
+      .attr("dy", "1em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${value}`)
+      .text(`${tvoc} ppb`)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [value, minVal, maxVal, numLabels]);
+  }, [tvoc, minTVOC, maxTVOC, optimalTVOC, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default PMOne;
+export default TVOCGauge;

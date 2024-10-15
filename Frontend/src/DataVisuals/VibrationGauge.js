@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef } from "react";
+// src/VibrationGauge.js
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const PMOne = ({ value = 0, numLabels = 5 }) => {
+const VibrationGauge = ({ vibration = 0, numLabels = 5 }) => {
   const ref = useRef();
-  const minVal = 0;
-  const maxVal = 100;
+  const minVibration = 0;
+  const maxVibration = 500;
 
   useEffect(() => {
     const svg = d3
@@ -24,7 +25,7 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
     const defs = svg.append("defs");
     const gradient = defs
       .append("linearGradient")
-      .attr("id", "db-gradient")
+      .attr("id", "vibration-gradient")
       .attr("x1", "0%")
       .attr("y1", "0%")
       .attr("x2", "100%")
@@ -35,10 +36,10 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
     gradient.append("stop").attr("offset", "70%").attr("stop-color", "orange");
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "red");
 
-    // Decibel scale mapping to angles
-    const pmScale = d3
+    // Vibration scale mapping to angles
+    const vibrationScale = d3
       .scaleLinear()
-      .domain([minVal, maxVal])
+      .domain([minVibration, maxVibration])
       .range([-Math.PI / 2, Math.PI / 2]);
 
     // Background arc
@@ -53,10 +54,10 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       .append("path")
       .attr("d", arc)
       .attr("transform", `translate(${width / 2},${height / 1.5})`)
-      .style("fill", "url(#db-gradient)");
+      .style("fill", "url(#vibration-gradient)");
 
     // Needle
-    const needleAngle = pmScale(value);
+    const needleAngle = vibrationScale(vibration);
     const needleLength = innerRadius - 25;
     const needleWidth = 15;
     const needleHeadLength = 10;
@@ -84,15 +85,15 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
       )
       .style("fill", "#000");
 
-    // Decibel labels and lines
+    // Vibration labels and lines
     const labelScale = d3
       .scaleLinear()
       .domain([0, numLabels - 1])
-      .range([minVal, maxVal]);
+      .range([minVibration, maxVibration]);
 
     for (let i = 0; i < numLabels; i++) {
-      const pm = labelScale(i);
-      const angle = pmScale(pm);
+      const vibrationValue = labelScale(i);
+      const angle = vibrationScale(vibrationValue);
       const xLabel = width / 2 + labelRadius * Math.cos(angle - Math.PI / 2);
       const yLabel = height / 1.5 + labelRadius * Math.sin(angle - Math.PI / 2);
 
@@ -120,22 +121,23 @@ const PMOne = ({ value = 0, numLabels = 5 }) => {
         .attr("y", yLabel - 10)
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${Math.round(pm)}`)
+        .text(`${Math.round(vibrationValue)}`)
         .style("font-size", "1.1rem")
         .style("fill", "#ffffff");
     }
 
+    // Vibration text
     svg
       .append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "1.7em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
-      .text(`${value}`)
+      .text(`${vibration} Hz`)
       .style("font-size", "2rem")
       .style("fill", "#ffffff");
-  }, [value, minVal, maxVal, numLabels]);
+  }, [vibration, minVibration, maxVibration, numLabels]);
 
   return <svg ref={ref}></svg>;
 };
 
-export default PMOne;
+export default VibrationGauge;

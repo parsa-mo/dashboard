@@ -10,15 +10,15 @@ const DecibelGauge = ({ decibel = 0, numLabels = 5 }) => {
   useEffect(() => {
     const svg = d3
       .select(ref.current)
-      .attr("width", window.innerWidth * 0.35)
-      .attr("height", window.innerHeight * 0.2);
+      .attr("width", window.innerWidth * 0.25)
+      .attr("height", window.innerHeight * 0.1);
 
     svg.selectAll("*").remove(); // Clear previous content
 
-    const width = window.innerWidth * 0.35;
-    const height = window.innerHeight * 0.2;
-    const innerRadius = 120;
-    const outerRadius = Math.min(width - 100, height) / 2;
+    const width = window.innerWidth * 0.25;
+    const height = window.innerHeight * 0.09;
+    const innerRadius = 75;
+    const outerRadius = Math.min(width - 125, height) / 2;
     const labelRadius = outerRadius + 20;
 
     // Define the gradient
@@ -58,8 +58,8 @@ const DecibelGauge = ({ decibel = 0, numLabels = 5 }) => {
 
     // Needle
     const needleAngle = decibelScale(decibel);
-    const needleLength = innerRadius - 35;
-    const needleWidth = 40;
+    const needleLength = innerRadius - 25;
+    const needleWidth = 15;
     const needleHeadLength = 10;
     const needleData = [
       { x: 0, y: -needleLength }, // Tip of the needle
@@ -130,7 +130,7 @@ const DecibelGauge = ({ decibel = 0, numLabels = 5 }) => {
     svg
       .append("text")
       .attr("text-anchor", "middle")
-      .attr("dy", "1em")
+      .attr("dy", "1.7em")
       .attr("transform", `translate(${width / 2},${height / 1.4})`)
       .text(`${decibel} dB`)
       .style("font-size", "2rem")

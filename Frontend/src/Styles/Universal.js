@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-
+import { Icon1, Icon2, Icon4, Icon3 } from "../Images/Images";
 const Main = styled.main`
   width: 100% !important;
   height: 100% !important;
@@ -59,20 +59,47 @@ const Divider = styled.hr`
   border-radius: 40px;
 `;
 
-const Circle = ({ status }) => {
-  const CircleWrapper = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 4px solid darkgray; /* Darker grey border */
-    background-color: ${status === 1 ? "green" : "red"}; /* Dynamic color */
-    //position: absolute;
-    //right: 20px; /* Positioning the circle on the right */
-    //top: 50%;
-    //transform: translateY(-50%);
-  `;
+const CircleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-  return <CircleWrapper />;
+const Image = styled.img`
+  width: 20%;
+`;
+
+const Label = styled.div`
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1.5rem;
+  white-space: pre-line; /* Allows for line breaks in the label */
+  color: white;
+`;
+
+const Circle = ({ ir, hall }) => {
+  let imageSource;
+  let labelText;
+
+  if (ir === 1 && hall >= 600) {
+    imageSource = Icon1;
+    labelText = "Fume Hood: Closed\nEnclosure: Closed";
+  } else if (ir === 1 && hall < 600) {
+    imageSource = Icon2;
+    labelText = "Fume Hood: Closed\nEnclosure: Open";
+  } else if (ir !== 1 && hall >= 600) {
+    imageSource = Icon3;
+    labelText = "Fume Hood: Open\nEnclosure: Closed";
+  } else if (ir !== 1 && hall < 600) {
+    imageSource = Icon4;
+    labelText = "Fume Hood: Open\nEnclosure: Open";
+  }
+
+  return (
+    <CircleWrapper>
+      <Image src={imageSource} alt="status-icon" />
+      <Label>{labelText}</Label>
+    </CircleWrapper>
+  );
 };
-
 export { Main, Container, VisualDiv, Title, Row, SubTitle, Divider, Circle };
